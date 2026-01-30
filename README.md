@@ -1,5 +1,7 @@
 # Paper Polish Workflow
 
+[English](README.md) | [中文](README_CN.md)
+
 A systematic, AI-assisted workflow for polishing academic papers. Designed for use with Claude/OpenCode AI assistants.
 
 ## 🎯 What is this?
