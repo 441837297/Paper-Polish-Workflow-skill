@@ -4,7 +4,7 @@
 
 A systematic, AI-assisted workflow for polishing academic papers. Designed for use with Claude/OpenCode AI assistants.
 
-## 🎯 What is this?
+## What is this?
 
 An AI skill that guides you through paper polishing **step by step**:
 
@@ -13,12 +13,12 @@ Structure → Sentence Logic → Expression
 ```
 
 Instead of making arbitrary changes, the AI helps you:
-1. ✅ Confirm the overall structure of each section
-2. ✅ Confirm the logic of each sentence  
-3. ✅ Select from multiple expression options
-4. ✅ Check consistency and coherence
+1. Confirm the overall structure of each section
+2. Confirm the logic of each sentence  
+3. Select from multiple expression options
+4. Check consistency and coherence
 
-## ✨ Features
+## Features
 
 - **Top-down approach**: Never jumps to wording before confirming logic
 - **User-led**: Every step requires your confirmation
@@ -26,21 +26,23 @@ Instead of making arbitrary changes, the AI helps you:
 - **Reference-driven**: Consults example papers for professional phrasing
 - **Journal-aware**: Includes CEUS-specific requirements (extensible to other journals)
 
-## 📦 Installation
+## Installation
 
 ### For OpenCode Users
 
 ```bash
-# Copy to your project's skills directory
-mkdir -p .opencode/skills
-cp skill/paper-polish-workflow.md .opencode/skills/
+# Copy the skill directory to your project
+cp -r paper-polish-workflow/ .opencode/skills/
 ```
 
 ### For Claude Code Users
 
-Copy `skill/paper-polish-workflow.md` to your project and reference it in your configuration.
+```bash
+# Copy the skill directory
+cp -r paper-polish-workflow/ .claude/skills/
+```
 
-## 🚀 Quick Start
+## Quick Start
 
 Simply ask the AI to polish your paper:
 
@@ -60,7 +62,7 @@ AI: [Step 5] Checks coherence, suggests transitions...
 AI: Writes polished version to file
 ```
 
-## 📋 Workflow Steps
+## Workflow Steps
 
 | Step | What Happens |
 |------|--------------|
@@ -72,7 +74,7 @@ AI: Writes polished version to file
 | **Step 5** | AI checks repetition and coherence |
 | **Write** | AI presents final version and writes to file |
 
-## 🎓 Supported Journals
+## Supported Journals
 
 ### CEUS (Computers, Environment and Urban Systems)
 
@@ -82,57 +84,36 @@ Built-in support for:
 - Style checklist (geospatial perspective, policy implications)
 - Section word budget recommendations
 
+See [`references/journals/ceus.md`](references/journals/ceus.md) for full specifications.
+
 ### Adding Other Journals
 
-Edit `paper-polish-workflow.md` to add requirements for other journals.
+Create a new file in `references/journals/` following the CEUS template format.
 
-## 💡 Key Concepts
-
-### Top-Down Polishing
-
-```
-┌─────────────────────────────────────┐
-│  1. STRUCTURE                       │
-│     What sections/components?       │
-│     ↓                               │
-│  2. LOGIC                           │
-│     What should each sentence say?  │
-│     ↓                               │
-│  3. EXPRESSION                      │
-│     How to say it professionally?   │
-└─────────────────────────────────────┘
-```
-
-### Interactive Option Selection
-
-The workflow uses `mcp_question` for efficient selection:
-
-```
-┌─────────────────────────────────────────────┐
-│ S1 Expression                               │
-│ ─────────────────────────────────────────── │
-│ S1: Urban perception importance             │
-│                                             │
-│ ○ A: Human perception of urban...           │
-│ ○ B: How people perceive urban...           │
-│ ○ C: Understanding how people...            │
-│ ○ Type your own answer                      │
-└─────────────────────────────────────────────┘
-```
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 paper-polish-workflow/
-├── README.md                 # This file
-├── LICENSE                   # MIT License
-├── skill/
-│   └── paper-polish-workflow.md   # The skill definition
-└── examples/
-    └── abstract-polishing-session.md  # Example session
+├── paper-polish-workflow/
+│   └── SKILL.md              # Main skill definition
+├── references/
+│   ├── journals/
+│   │   └── ceus.md           # CEUS journal specs
+│   └── expression-patterns.md # Academic writing patterns
+├── examples/
+│   └── abstract-polishing-session.md
+├── .github/
+│   └── workflows/
+│       └── validate-skill.yml # CI validation
+├── README.md
+├── README_CN.md
+├── CONTRIBUTING.md
+├── CONTRIBUTING_CN.md
+├── CHANGELOG.md
+└── LICENSE
 ```
 
-## 🔧 Requirements
+## Requirements
 
 - OpenCode or Claude Code with tool access
 - Tools needed:
@@ -140,22 +121,21 @@ paper-polish-workflow/
   - `mcp_read`, `mcp_write` - for file operations
   - `mcp_look_at` - for PDF analysis (optional)
 
-## 📖 Example Session
+## Example Session
 
 See [examples/abstract-polishing-session.md](examples/abstract-polishing-session.md) for a complete walkthrough.
 
-## 🤝 Contributing
+## Contributing
 
-Contributions welcome! Please submit issues or pull requests for:
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Contributions welcome for:
 - Additional journal templates
 - Improved expression patterns  
 - Workflow optimizations
-- Bug fixes
 
-## 📄 License
+## License
 
-MIT License - Feel free to modify and share.
+MIT License - See [LICENSE](LICENSE) for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Developed through iterative refinement while polishing a dual-layer urban perception paper for CEUS journal submission.

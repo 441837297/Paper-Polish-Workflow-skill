@@ -1,3 +1,8 @@
+---
+name: paper-polish-workflow
+description: Systematic AI-assisted workflow for polishing academic papers. Top-down approach from structure to expression. Triggers: polish paper, revise paper, improve paper writing, 润色论文, 精修论文, academic writing
+---
+
 # Skill: Academic Paper Polish Workflow
 
 A systematic, top-down workflow for polishing academic papers. Works from structure → logic → expression, with user confirmation at each step.
@@ -217,18 +222,9 @@ Select A / B / C or provide your version?
 
 ### Step 4.5: Journal Style Check (期刊风格检查)
 
-**For CEUS journal specifically**:
+Apply journal-specific style requirements. For full checklist, see `references/journals/ceus.md`.
 
-```markdown
-## CEUS Style Checklist
-
-- [ ] Geospatial perspective emphasized? (CEUS requirement)
-- [ ] Policy/planning implications in Discussion?
-- [ ] Sustainability angle considered?
-- [ ] Avoid words like "novel", "groundbreaking"
-- [ ] Verb tense: Methods=past, Results=past, Discussion=present
-```
-
+---
 ---
 
 ### Step 5: Repetition & Coherence Check (重复与连贯性检查)
@@ -284,27 +280,9 @@ mcp_question({
 
 ---
 
-### Step 5.7: Generate Highlights - CEUS Required (生成Highlights)
+### Step 5.7: Generate Highlights - Journal Required (生成Highlights)
 
-**CEUS requirement**: 3-5 highlights, each ≤85 characters
-
-**Output Format**:
-```markdown
-## CEUS Highlights
-
-| # | Highlight | Characters | Status |
-|---|-----------|------------|--------|
-| 1 | Dual-layer framework integrates scene semantics with urban context | 67 | ✅ |
-| 2 | LLM-powered scene graphs provide interpretable semantic features | 64 | ✅ |
-| 3 | Pre-trained GNN transfers to downstream urban analytics tasks | 60 | ✅ |
-| 4 | Experiments on 8 cities with 1.8 million pairwise comparisons | 58 | ✅ |
-| 5 | Framework outperforms CNN and Transformer baselines significantly | 66 | ✅ |
-
-Rules:
-- Each highlight ≤85 characters
-- No abbreviations (unless universally known)
-- No citations
-```
+Generate highlights according to journal requirements. For CEUS format and examples, see `references/journals/ceus.md`.
 
 ---
 
@@ -339,53 +317,21 @@ Rules:
 
 ## Journal-Specific Requirements
 
-### CEUS (Computers, Environment and Urban Systems)
+Journal templates are stored in `references/journals/`. Currently supported:
 
-| Requirement | Specification |
-|-------------|---------------|
-| Total word limit | ≤8,000 words |
-| Abstract | ≤250 words |
-| Highlights | 3-5 items, each ≤85 characters, **required** |
-| Graphical Abstract | Recommended (≥531×1328 pixels) |
-| Data Availability | Statement required |
-| Review type | Double-blind (anonymized manuscript required) |
-
-### Word Budget Reference (8000 total)
-
-| Section | Suggested Words |
-|---------|-----------------|
-| Abstract | 200-250 |
-| Introduction | 700-900 |
-| Related Work | 800-1,000 |
-| Methodology | 2,000-2,500 |
-| Experiments | 1,500-2,000 |
-| Discussion | 500-700 |
-| Conclusion | 200-400 |
+- **CEUS** (Computers, Environment and Urban Systems): See `references/journals/ceus.md`
 
 ---
 
 ## Common Issue Handling
 
-### User says "this word isn't professional"
-→ Use `mcp_look_at` to analyze example papers
-→ Extract patterns from similar sections
-→ Provide reference-based options via `mcp_question`
-
-### User says "this sentence is abrupt"
-→ Provide transition word options via `mcp_question`
-→ Common transitions: "To address...", "In response...", "However...", "Moreover..."
-
-### User says "there's repetition"
-→ Identify repeated content
-→ Suggest which to remove with reasoning
-
-### User wants to modify logic structure
-→ Return to Step 1 or Step 2 to re-confirm
-
-### User wants to expand/reduce word count
-→ Identify which paragraphs to expand/compress
-→ Get user confirmation on approach before proceeding
-
+| Issue | Solution |
+|-------|----------|
+| "This word isn't professional" | Use `mcp_look_at` to analyze example papers, provide reference-based options |
+| "This sentence is abrupt" | Provide transition options: "To address...", "In response...", "However..." |
+| "There's repetition" | Identify repeated content, suggest which to remove |
+| "Modify logic structure" | Return to Step 1 or Step 2 to re-confirm |
+| "Expand/reduce word count" | Identify paragraphs to adjust, get user confirmation |
 ---
 
 ## Tools Used
@@ -400,50 +346,3 @@ Rules:
 
 ---
 
-## Example Conversation Flow
-
-```
-User: Help me polish the abstract
-
-AI: [Phase 0] 
-    - What is the target journal?
-    - Where are the example papers?
-    
-User: CEUS, examples in docs/example
-
-AI: [Step 1] 
-    Present abstract structure analysis table
-    "Please confirm structure..."
-
-User: Confirmed
-
-AI: [Step 2]
-    Present per-sentence logic table
-    "Please confirm each sentence's logic..."
-
-User: S1 confirmed, S2 should emphasize...
-
-AI: [Step 3]
-    Call mcp_question with expression options for S1-S4
-    
-User: (Selects via mcp_question UI or types custom answer)
-
-AI: Record selections, continue with S5-S8...
-
-AI: [Step 4] (if needed)
-    User questions professionalism of a term
-    Use mcp_look_at to analyze example papers
-    Present reference-based new options
-
-AI: [Step 5]
-    Check repetition and coherence
-    Use mcp_question for transition word selection
-
-AI: [Write to File]
-    Present final version
-    "Confirm to write to file?"
-    
-User: Yes
-
-AI: Write to *_polished.md
-```
