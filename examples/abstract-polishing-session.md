@@ -1,12 +1,14 @@
 # Example Session: Polishing an Abstract
 
-This document shows a complete session of polishing an abstract for a CEUS journal submission.
+This document shows a complete session of polishing an abstract for an academic journal submission.
 
 ## Context
 
-- **Paper**: Dual-layer GNN framework for urban perception prediction
-- **Target Journal**: CEUS (Computers, Environment and Urban Systems)
+- **Paper**: Deep learning framework for medical image classification (Fictional Example)
+- **Target Journal**: Example Journal (with ≤8,000 words, ≤250 words abstract)
 - **Section**: Abstract
+
+> **Note**: This is a fictional example created for demonstration purposes only. All research details, methods, and results are fabricated.
 
 ---
 
@@ -20,12 +22,12 @@ Before we start polishing, I need some information:
 3. Which section should we start with?
 ```
 
-**User**: CEUS journal, examples in docs/example, start with abstract
+**User**: Target journal has 250-word abstract limit, examples in docs/example, start with abstract
 
 **AI**: 
 ```
 ## Pre-Polish Checklist
-- Target: CEUS (≤8,000 words total, ≤250 words abstract)
+- Target: Example Journal (≤8,000 words total, ≤250 words abstract)
 - Example papers: docs/example/*.pdf
 - Section: Abstract
 - Current abstract word count: ~280 words (needs trimming)
@@ -62,16 +64,16 @@ Please confirm this structure, or describe adjustments needed.
 
 | Sentence | Logic Function | Key Points |
 |----------|----------------|------------|
-| S1 | Background | Urban perception importance for planning/policy |
-| S2 | Data | SVI as critical data source |
-| S3 | Gap | Pixel-level features → ignore entities/relations → black box → can't support decisions |
-| S4 | Method Overview | Dual-layer framework: micro semantics + macro context |
-| S5 | Method Micro | LLM extracts scene graphs (entities, relations, attributes) |
-| S6 | Method Micro | GNN encodes graphs, fuses with text summaries |
-| S7 | Method Macro | Dual-edge urban graph (topology + POI similarity) |
-| S8 | Method Macro | GAT propagates features for urban context |
-| S9 | Results | 8 cities, 1.8M comparisons, AUC [TBD], outperforms baselines |
-| S10 | Contribution | Accuracy + interpretability + transferable pre-trained GNN |
+| S1 | Background | Medical imaging importance for clinical diagnosis |
+| S2 | Data | Large-scale datasets enabling AI-based analysis |
+| S3 | Gap | Current methods → limited interpretability → hard to trust → clinical adoption barrier |
+| S4 | Method Overview | Hybrid framework: local features + global context |
+| S5 | Method Detail | CNN extracts local patterns from image regions |
+| S6 | Method Detail | Attention mechanism highlights diagnostic regions |
+| S7 | Method Detail | Multi-scale fusion combines different resolution features |
+| S8 | Method Detail | Interpretability module generates visual explanations |
+| S9 | Results | Evaluated on benchmark datasets, achieves competitive accuracy |
+| S10 | Contribution | Accuracy + interpretability + clinical applicability |
 
 Please confirm each sentence's logic.
 ```
@@ -79,12 +81,12 @@ Please confirm each sentence's logic.
 **User**: 
 - S1: Confirm
 - S2: Confirm  
-- S3: Modify - emphasize that entities/relations are central to human perception
+- S3: Modify - emphasize that interpretability is essential for clinical trust
 - S4-S8: Confirm
 - S9: Confirm
 - S10: Confirm
 
-**AI**: Updated S3 logic to: "Pixel-level features → ignore entities/relations (which are central to human perception) → black box → can't support decisions"
+**AI**: Updated S3 logic to: "Current methods → limited interpretability (essential for clinical trust) → adoption barrier in real-world settings"
 
 ---
 
@@ -96,18 +98,19 @@ Please confirm each sentence's logic.
 ┌─────────────────────────────────────────────────────────────┐
 │ S1 Expression                                               │
 │ ─────────────────────────────────────────────────────────── │
-│ S1: Urban perception importance for planning/policy         │
+│ S1: Medical imaging importance for clinical diagnosis       │
 │                                                             │
-│ ○ A: Human perception of urban environments has gained      │
-│      increasing importance in urban planning, wellbeing     │
-│      research, and policy-making.                           │
+│ ○ A: Medical imaging plays a critical role in modern        │
+│      clinical diagnosis, disease monitoring, and treatment  │
+│      planning.                                              │
 │                                                             │
-│ ○ B: How people perceive urban environments has become      │
-│      increasingly influential in urban planning and         │
-│      public health.                                         │
+│ ○ B: Advances in medical imaging have revolutionized        │
+│      clinical practice, enabling non-invasive diagnosis     │
+│      across specialties.                                    │
 │                                                             │
-│ ○ C: Understanding how people perceive street environments  │
-│      is essential for urban planning and policy decisions.  │
+│ ○ C: Accurate interpretation of medical images is           │
+│      fundamental to clinical decision-making and patient    │
+│      outcomes.                                              │
 │                                                             │
 │ ○ Type your own answer                                      │
 └─────────────────────────────────────────────────────────────┘
@@ -119,18 +122,19 @@ Please confirm each sentence's logic.
 ┌─────────────────────────────────────────────────────────────┐
 │ S2 Expression                                               │
 │ ─────────────────────────────────────────────────────────── │
-│ S2: SVI as critical data source                             │
+│ S2: Large-scale datasets enabling AI analysis               │
 │                                                             │
-│ ○ A: Street view imagery (SVI) has emerged as a critical    │
-│      data source enabling city-scale perception analysis.   │
+│ ○ A: The availability of large-scale annotated datasets     │
+│      has accelerated the development of AI-based diagnostic │
+│      systems.                                               │
 │                                                             │
-│ ○ B: The widespread availability of street view imagery     │
-│      has enabled large-scale, automated perception          │
-│      assessment across cities.                              │
+│ ○ B: Deep learning methods have shown remarkable success    │
+│      in automated image analysis, driven by growing data    │
+│      availability.                                          │
 │                                                             │
-│ ○ C: Street view imagery provides the visual foundation     │
-│      for scalable urban perception research, capturing      │
-│      the pedestrian-level perspective.                      │
+│ ○ C: Recent advances in deep learning, combined with        │
+│      large medical imaging datasets, have enabled automated │
+│      diagnostic tools.                                      │
 │                                                             │
 │ ○ Type your own answer                                      │
 └─────────────────────────────────────────────────────────────┘
@@ -144,7 +148,7 @@ Please confirm each sentence's logic.
 
 ## Step 4: Reference Paper Consultation
 
-**User**: "Is 'urban planning, wellbeing research, and policy-making' the right terminology?"
+**User**: "Is 'clinical decision-making and patient outcomes' the right terminology?"
 
 **AI** analyzes example papers:
 
@@ -153,19 +157,19 @@ Please confirm each sentence's logic.
 
 | Paper | Opening Phrase | Pattern |
 |-------|---------------|---------|
-| Paper 1 | "environmental perception and socioeconomic predictions" | task-focused |
-| Paper 2 | "urban planning and public health" | domain-focused |
-| Paper 3 | "public health and urban livability" | outcome-focused |
-| Paper 4 | "urban safety detection" | specific task |
+| Paper 1 | "diagnosis and treatment planning" | task-focused |
+| Paper 2 | "clinical workflow and patient care" | process-focused |
+| Paper 3 | "diagnostic accuracy and efficiency" | outcome-focused |
+| Paper 4 | "clinical practice and decision support" | application-focused |
 
 ## Suggested Alternatives
 
 | Option | Expression |
 |--------|------------|
-| A | urban planning, wellbeing research, and policy-making |
-| B | urban planning, public health, and socioeconomic analysis |
-| C | urban livability, public health, and planning interventions |
-| D | urban planning, wellbeing research, and policy-making (keep original) |
+| A | clinical decision-making and patient outcomes |
+| B | diagnostic accuracy and clinical efficiency |
+| C | clinical workflow and patient care |
+| D | clinical decision-making and patient outcomes (keep original) |
 ```
 
 **User selects**: D (keep original)
@@ -180,7 +184,7 @@ Please confirm each sentence's logic.
 
 | Location | Issue | Suggestion |
 |----------|-------|------------|
-| S4 vs S10 | Both mention "pre-trained GNN" | Remove from S4, keep in S10 |
+| S4 vs S10 | Both mention "interpretability" | Rephrase S4 to "explainable predictions" |
 
 ## Coherence Check
 
@@ -199,7 +203,7 @@ Please confirm each sentence's logic.
 │                                                             │
 │ ○ A: "To address these limitations, this study..."          │
 │ ○ B: "In response, this study..."                           │
-│ ○ C: "Building on recent advances, we..."                   │
+│ ○ C: "To bridge this gap, we..."                            │
 │ ○ D: Keep as is (no transition)                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -214,30 +218,25 @@ Please confirm each sentence's logic.
 ```markdown
 ## Final Abstract
 
-Human perception of urban environments has gained increasing importance 
-in urban planning, wellbeing research, and policy-making. Street view 
-imagery provides the visual foundation for scalable urban perception 
-research, capturing the pedestrian-level perspective. However, existing 
-methods rely on pixel-level feature extraction, neglecting the semantic 
-entities and relations that are central to human perception, and operate 
-as black boxes that cannot inform real-world planning decisions. To 
-address these limitations, this study introduces a dual-layer framework 
-combining micro-level scene semantics with macro-level urban context. 
-The micro-level module employs large language models (LLMs) to extract 
-structured scene graphs comprising entities, relations, and attributes 
-from each street view image. These graphs are encoded using graph neural 
-networks and fused with textual scene summaries. At the macro level, we 
-construct an urban graph with two types of edges: physical street 
-connectivity and functional similarity based on point-of-interest 
-distributions. Features are then propagated through graph attention 
-networks to capture urban context. We evaluate the framework on 8 global 
-cities with 1.8 million LLM-annotated pairwise comparisons, achieving an 
-AUC of [TBD] and outperforming [TBD] baselines. The framework improves 
-prediction accuracy while providing interpretable outputs that support 
-urban decision-making, and delivers a pre-trained GNN transferable to 
-various downstream tasks.
+Medical imaging plays a critical role in modern clinical diagnosis, 
+disease monitoring, and treatment planning. Recent advances in deep 
+learning, combined with large medical imaging datasets, have enabled 
+automated diagnostic tools. However, existing methods often lack 
+interpretability, which is essential for clinical trust and limits 
+their adoption in real-world settings. To address these limitations, 
+this study introduces a hybrid framework combining local feature 
+extraction with global context modeling. The framework employs 
+convolutional neural networks to extract local patterns from image 
+regions, while an attention mechanism highlights diagnostically 
+relevant areas. Multi-scale feature fusion integrates information 
+across resolutions, and an interpretability module generates visual 
+explanations for predictions. We evaluate the framework on multiple 
+benchmark datasets, achieving competitive accuracy while providing 
+clinician-friendly explanations. The framework advances both 
+diagnostic accuracy and interpretability, supporting practical 
+clinical deployment.
 
-**Word Count**: ~230 words ✅ (within 250 limit)
+**Word Count**: ~150 words ✅ (within 250 limit)
 
 Confirm to write to file?
 ```
@@ -252,7 +251,7 @@ Confirm to write to file?
 
 | Step | Action | User Input |
 |------|--------|------------|
-| Phase 0 | Collect requirements | CEUS, docs/example |
+| Phase 0 | Collect requirements | Journal specs, docs/example |
 | Step 1 | Confirm structure | Confirmed |
 | Step 2 | Confirm sentence logic | Modified S3 |
 | Step 3 | Select expressions | A, C, B, B, ... |
