@@ -34,11 +34,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. CEUS journal template file exists with consistent section headers, formatting rules, and style guidelines that any Skill can load via Read tool
   3. Anti-AI patterns file contains a high-frequency AI vocabulary blacklist with human-sounding alternatives organized by category
   4. All reference files are under `references/` directory and loadable independently (no file exceeds context-friendly size)
-**Plans**: TBD
+**Plans**: 2 planned
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01: Restructure expression references for on-demand loading
+- [ ] 01-02: Build CEUS and anti-AI reference contracts
 
 ### Phase 2: Skill Conventions
 **Goal**: A documented Skill template pattern exists that all subsequent Skills follow, ensuring consistency across the entire suite
@@ -189,3 +189,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 8. Figure/Table and Logic Skills | 0/2 | Not started | - |
 | 9. Literature and Support Skills | 0/3 | Not started | - |
 | 10. Documentation | 0/1 | Not started | - |
+
