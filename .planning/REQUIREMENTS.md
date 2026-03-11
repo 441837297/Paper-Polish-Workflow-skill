@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **FNDN-01**: Shared expression patterns library covers sentence starters, transitions, hedging, results, and conclusions with bilingual examples
 - [x] **FNDN-02**: Journal template system with CEUS as first template, following a strict contract (consistent section headers across all journal files)
 - [x] **FNDN-03**: Anti-AI patterns library with high-frequency AI vocabulary blacklist and human-sounding alternatives
-- [ ] **FNDN-04**: Skill template conventions document defining YAML frontmatter format, tool usage rules, ~300 line limit, and progressive disclosure pattern
+- [x] **FNDN-04**: Skill template conventions document defining YAML frontmatter format, tool usage rules, ~300 line limit, and progressive disclosure pattern
 
 ### Core Skills (CORE)
 
@@ -79,7 +79,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FNDN-01 | Phase 1: Reference Libraries | Complete |
 | FNDN-02 | Phase 1: Reference Libraries | Complete |
 | FNDN-03 | Phase 1: Reference Libraries | Complete |
-| FNDN-04 | Phase 2: Skill Conventions | Pending |
+| FNDN-04 | Phase 2: Skill Conventions | Complete |
 | CORE-01 | Phase 3: Translation Skill | Pending |
 | CORE-02 | Phase 4: Polish Skill | Pending |
 | CORE-03 | Phase 5: De-AI Skill | Pending |

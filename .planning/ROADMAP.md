@@ -13,7 +13,7 @@ This roadmap delivers a complete academic writing AI tool suite as Claude Code S
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Reference Libraries** - Build shared expression patterns, anti-AI patterns, and CEUS journal template
-- [ ] **Phase 2: Skill Conventions** - Establish Skill template pattern, YAML frontmatter format, and progressive disclosure rules
+- [x] **Phase 2: Skill Conventions** - Establish Skill template pattern, YAML frontmatter format, and progressive disclosure rules
 - [ ] **Phase 3: Translation Skill** - Chinese-to-English academic translation with LaTeX output
 - [ ] **Phase 4: Polish Skill** - Redesigned English polishing with flexible guided and quick-fix modes
 - [ ] **Phase 5: De-AI Skill** - AI detection pattern rewriting to reduce AI traces while maintaining quality
@@ -49,10 +49,10 @@ Plans:
   2. Conventions specify the ~300 line limit and progressive disclosure pattern (lean SKILL.md that loads references on-demand)
   3. Conventions include tool usage rules (which tools are available, when to use AskUserQuestion vs. automatic flow)
   4. A concrete example Skill skeleton exists that future phases can copy as starting point
-**Plans**: TBD
+**Plans**: 1 planned
 
 Plans:
-- [ ] 02-01: TBD
+- [x] 02-01: Define canonical skill conventions and skeleton
 
 ### Phase 3: Translation Skill
 **Goal**: Users can translate Chinese academic drafts into polished English academic text ready for journal submission
@@ -180,7 +180,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Reference Libraries | 2/2 | Complete | 2026-03-11 |
-| 2. Skill Conventions | 0/1 | Not started | - |
+| 2. Skill Conventions | 1/1 | Complete | 2026-03-11 |
 | 3. Translation Skill | 0/1 | Not started | - |
 | 4. Polish Skill | 0/2 | Not started | - |
 | 5. De-AI Skill | 0/1 | Not started | - |
@@ -189,5 +189,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 8. Figure/Table and Logic Skills | 0/2 | Not started | - |
 | 9. Literature and Support Skills | 0/3 | Not started | - |
 | 10. Documentation | 0/1 | Not started | - |
+
 
 

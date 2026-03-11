@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to discuss
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-11T08:49:32.790Z"
-last_activity: 2026-03-11 — Phase 1 completed and verified; ready to discuss Phase 2
+status: Phase 2 complete
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-11T12:53:08Z"
+last_activity: 2026-03-11 — Phase 2 executed; skill conventions and skeleton created
 progress:
   total_phases: 10
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
-  percent: 10
+  completed_phases: 2
+  total_plans: 3
+  completed_plans: 3
+  percent: 20
 ---
 
 # Project State
@@ -21,33 +21,34 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-10)
 
 **Core value:** Every Skill must produce output that is directly usable in a real paper submission
-**Current focus:** Phase 2: Skill Conventions
+**Current focus:** Phase 3: Translation Skill
 
 ## Current Position
 
-Phase: 2 of 10 (Skill Conventions)
+Phase: 3 of 10 (Translation Skill)
 Plan: 0 of 1 in current phase
-Status: Ready to discuss
-Last activity: 2026-03-11 — Phase 1 completed and verified; ready to discuss Phase 2
+Status: Phase 2 complete
+Last activity: 2026-03-11 — Phase 2 executed; skill conventions and skeleton created
 
-Progress: [█░░░░░░░░░] 10%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 47 min
-- Total execution time: 1h 34m
+- Total plans completed: 3
+- Average duration: 35 min
+- Total execution time: 1h 38m
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 2 | 1h 34m | 47 min |
+| 02 | 1 | 4m | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01, 01-02
-- Trend: Initial phase complete
+- Last 5 plans: 01-01, 01-02, 02-01
+- Trend: Conventions phase completed quickly (markdown-only)
 
 *Updated after each plan completion*
 
@@ -65,6 +66,10 @@ Recent decisions affecting current work:
 - [Phase 01]: Expression modules organized by writing scenario — Matches downstream retrieval patterns better than grammar-only grouping and keeps context narrower.
 - [Phase 01]: CEUS path promoted to stable journal contract — Future Skills can target invariant headings without copying journal guidance into prompts.
 - [Phase 01]: Anti-AI library grouped by category and risk tier — Supports lightweight retrieval today and richer De-AI explanation/rewrite flows later.
+- [Phase 02]: Conventions and skeleton kept as separate linked files for independent copyability and maintenance
+- [Phase 02]: Tools listed by capability category rather than vendor-specific names to prevent tool-name lock-in
+- [Phase 02]: ~300 line hard budget with justification required for exceptions
+- [Phase 02]: Four interaction modes defined: interactive, guided, direct, batch
 
 ### Pending Todos
 
@@ -78,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T08:49:32.788Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-skill-conventions/02-CONTEXT.md
+Last session: 2026-03-11T12:53:08Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: .planning/phases/02-skill-conventions/02-01-SUMMARY.md
