@@ -14,7 +14,7 @@ Structure → Sentence Logic → Expression
 
 Instead of making arbitrary changes, the AI helps you:
 1. Confirm the overall structure of each section
-2. Confirm the logic of each sentence  
+2. Confirm the logic of each sentence
 3. Select from multiple expression options
 4. Check consistency and coherence
 
@@ -23,8 +23,9 @@ Instead of making arbitrary changes, the AI helps you:
 - **Top-down approach**: Never jumps to wording before confirming logic
 - **User-led**: Every step requires your confirmation
 - **Option-based**: Uses interactive selection for efficient choices
-- **Reference-driven**: Consults example papers for professional phrasing
-- **Journal-aware**: Includes CEUS-specific requirements (extensible to other journals)
+- **Reference-driven**: Consults reusable reference libraries instead of duplicating long prompt tables
+- **Journal-aware**: Includes a stable CEUS journal contract (extensible to other journals)
+- **Modular references**: Keeps stable overview files plus narrower leaf modules for on-demand loading
 
 ## Installation
 
@@ -49,10 +50,10 @@ Simply ask the AI to polish your paper:
 ```
 User: Help me polish the abstract
 
-AI: [Phase 0] 
+AI: [Phase 0]
     - What is the target journal?
     - Where are the example papers?
-    
+
 User: CEUS, examples in docs/example
 
 AI: [Step 1] Presents structure for confirmation...
@@ -74,43 +75,61 @@ AI: Writes polished version to file
 | **Step 5** | AI checks repetition and coherence |
 | **Write** | AI presents final version and writes to file |
 
+## Shared References
+
+The project now uses stable reference entrypoints plus narrower leaf modules.
+
+### Stable Entry Points
+
+- [`references/expression-patterns.md`](references/expression-patterns.md): overview and module map for academic expression patterns
+- [`references/anti-ai-patterns.md`](references/anti-ai-patterns.md): overview and risk model for anti-AI rewriting
+- [`references/journals/ceus.md`](references/journals/ceus.md): CEUS journal contract
+
+### Why this structure?
+
+- Skills can keep using stable top-level paths.
+- Longer workflows can load only the relevant leaf module under `references/expression-patterns/` or `references/anti-ai-patterns/`.
+- Future journal templates can follow the same stable `references/journals/[journal].md` contract.
+
 ## Supported Journals
 
 ### CEUS (Computers, Environment and Urban Systems)
 
 Built-in support for:
-- Word limits (≤8,000 total, ≤250 abstract)
-- Highlights generation (3-5 items, ≤85 chars each)
-- Style checklist (geospatial perspective, policy implications)
-- Section word budget recommendations
+- Word limits (<=8,000 total, <=250 abstract)
+- Highlights generation (3-5 items, <=85 chars each)
+- Writing preferences and quality checks
+- Section-by-section guidance for downstream Skills
 
-See [`references/journals/ceus.md`](references/journals/ceus.md) for full specifications.
+See [`references/journals/ceus.md`](references/journals/ceus.md) for the current contract.
 
 ### Adding Other Journals
 
-Create a new file in `references/journals/` following the CEUS template format.
+Create a new file in `references/journals/` following the CEUS heading contract:
+- `## Submission Requirements`
+- `## Writing Preferences`
+- `## Quality Checks`
+- `## Section Guidance`
 
 ## Project Structure
 
-```
+```text
 paper-polish-workflow/
 ├── paper-polish-workflow/
-│   └── SKILL.md              # Main skill definition
+│   └── SKILL.md
 ├── references/
-│   ├── journals/
-│   │   └── ceus.md           # CEUS journal specs
-│   └── expression-patterns.md # Academic writing patterns
+│   ├── expression-patterns.md          # Stable overview entrypoint
+│   ├── expression-patterns/            # Scenario-based expression modules
+│   ├── anti-ai-patterns.md             # Stable anti-AI entrypoint
+│   ├── anti-ai-patterns/               # Risk-tiered anti-AI modules
+│   └── journals/
+│       └── ceus.md                     # Stable CEUS journal contract
 ├── examples/
 │   └── abstract-polishing-session.md
-├── .github/
-│   └── workflows/
-│       └── validate-skill.yml # CI validation
 ├── README.md
 ├── README_CN.md
 ├── CONTRIBUTING.md
-├── CONTRIBUTING_CN.md
-├── CHANGELOG.md
-└── LICENSE
+└── CONTRIBUTING_CN.md
 ```
 
 ## Requirements
@@ -127,10 +146,10 @@ See [examples/abstract-polishing-session.md](examples/abstract-polishing-session
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Contributions welcome for:
-- Additional journal templates
-- Improved expression patterns  
-- Workflow optimizations
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Contributions are especially useful for:
+- New journal contracts under `references/journals/`
+- New expression modules under `references/expression-patterns/`
+- New anti-AI modules under `references/anti-ai-patterns/`
 
 ## License
 
