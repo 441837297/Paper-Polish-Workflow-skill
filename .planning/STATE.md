@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 5 context gathered
-last_updated: "2026-03-11T15:44:16.045Z"
-last_activity: 2026-03-11 — Phase 4 executed; polish skill created
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-11T23:52:23Z"
+last_activity: 2026-03-12 — Phase 5 executed; de-ai skill created
 progress:
   total_phases: 10
-  completed_phases: 4
-  total_plans: 5
-  completed_plans: 5
-  percent: 40
+  completed_phases: 5
+  total_plans: 6
+  completed_plans: 6
+  percent: 50
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-10)
 
 **Core value:** Every Skill must produce output that is directly usable in a real paper submission
-**Current focus:** Phase 4: Polish Skill
+**Current focus:** Phase 5: De-AI Skill
 
 ## Current Position
 
-Phase: 4 of 10 (Polish Skill)
+Phase: 5 of 10 (De-AI Skill)
 Plan: 1 of 1 in current phase
-Status: Phase 4 complete
-Last activity: 2026-03-11 — Phase 4 executed; polish skill created
+Status: Phase 5 complete
+Last activity: 2026-03-12 — Phase 5 executed; de-ai skill created
 
-Progress: [████░░░░░░] 40%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 21 min
-- Total execution time: 1h 44m
+- Total plans completed: 6
+- Average duration: 18 min
+- Total execution time: 1h 48m
 
 **By Phase:**
 
@@ -47,9 +47,10 @@ Progress: [████░░░░░░] 40%
 | 02 | 1 | 4m | 4 min |
 | 03 | 1 | 3m | 3 min |
 | 04 | 1 | 3m | 3 min |
+| 05 | 1 | 4m | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01, 01-02, 02-01, 03-01, 04-01
+- Last 5 plans: 01-02, 02-01, 03-01, 04-01, 05-01
 - Trend: Skill authoring phases complete quickly (markdown-only, no code)
 
 *Updated after each plan completion*
@@ -78,6 +79,10 @@ Recent decisions affecting current work:
 - [Phase 04]: LaTeX annotation format uses % [Polish] Original: prefix for cleanup-safe change tracking
 - [Phase 04]: Guided mode described as shared pattern with step-specific table for line budget efficiency
 - [Phase 04]: All three anti-AI pattern leaves loaded proactively (vocabulary, sentence-patterns, transitions-and-tone)
+- [Phase 05]: Two-phase detect-then-rewrite workflow with user decision between phases (locked decision)
+- [Phase 05]: Domain term protection uses dynamic context inference rather than hardcoded wordlist
+- [Phase 05]: Optional-tier patterns flagged only when appearing 3+ times (repetition threshold)
+- [Phase 05]: De-AI LaTeX annotation uses % [De-AI] Original: prefix, distinct from Polish Skill's % [Polish] Original:
 
 ### Pending Todos
 
@@ -90,6 +95,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T15:44:16.042Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-de-ai-skill/05-CONTEXT.md
+Last session: 2026-03-11T23:52:23Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: .planning/phases/05-de-ai-skill/05-01-SUMMARY.md

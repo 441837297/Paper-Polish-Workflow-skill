@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Skill Conventions** - Establish Skill template pattern, YAML frontmatter format, and progressive disclosure rules
 - [ ] **Phase 3: Translation Skill** - Chinese-to-English academic translation with LaTeX output
 - [ ] **Phase 4: Polish Skill** - Redesigned English polishing with flexible guided and quick-fix modes
-- [ ] **Phase 5: De-AI Skill** - AI detection pattern rewriting to reduce AI traces while maintaining quality
+- [x] **Phase 5: De-AI Skill** - AI detection pattern rewriting to reduce AI traces while maintaining quality
 - [ ] **Phase 6: Reviewer Simulation Skill** - Paper review from reviewer perspective with actionable feedback
 - [ ] **Phase 7: Abstract and Experiment Skills** - Abstract generation and experiment analysis/discussion generation
 - [ ] **Phase 8: Figure/Table and Logic Skills** - Caption generation and cross-section logic verification
@@ -95,7 +95,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 05-01-PLAN.md -- Author and validate the De-AI Skill SKILL.md— Author and validate the De-AI Skill SKILL.md
+- [x] 05-01-PLAN.md -- Author and validate the De-AI Skill SKILL.md
 
 ### Phase 6: Reviewer Simulation Skill
 **Goal**: Users can get a simulated peer review of their paper that identifies weaknesses and provides actionable improvement suggestions
@@ -182,7 +182,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 2. Skill Conventions | 1/1 | Complete | 2026-03-11 |
 | 3. Translation Skill | 0/1 | Not started | - |
 | 4. Polish Skill | 0/1 | Not started | - |
-| 5. De-AI Skill | 0/1 | Not started | - |
+| 5. De-AI Skill | 1/1 | Complete | 2026-03-12 |
 | 6. Reviewer Simulation Skill | 0/1 | Not started | - |
 | 7. Abstract and Experiment Skills | 0/2 | Not started | - |
 | 8. Figure/Table and Logic Skills | 0/2 | Not started | - |
