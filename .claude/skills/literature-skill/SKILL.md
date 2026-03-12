@@ -180,7 +180,7 @@ If the user provides the topic in the trigger message, skip question 1 and proce
 | Semantic Scholar MCP unavailable | Refuse immediately with setup guidance (Step 1 handles this); no partial fallback mode |
 | `get-paper-abstract` call fails for one paper | Mark abstract as "Abstract not available"; continue displaying remaining results |
 | Structured Interaction unavailable | Ask search query as plain-text question; proceed with numbered list in conversation |
-| Basic search returns poor results | Inform user: "If results are poor, re-trigger with more specific keywords" (no in-session re-query) |
+| Basic search returns poor results | Inform user: "If results are poor, re-trigger the Skill with more specific keywords" (single-shot only) |
 
 ## Examples
 
