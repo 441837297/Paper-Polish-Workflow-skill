@@ -106,7 +106,7 @@ None.
 
 | Output | Format | Condition |
 |--------|--------|-----------|
-| `recommendation_list` | 2–3 numbered recommendation cards displayed in conversation | Always — no file write |
+| `recommendation_list` | 2–3 numbered recommendation cards displayed in conversation | Always — conversation only |
 
 **Spatial data example (3 cards):**
 
