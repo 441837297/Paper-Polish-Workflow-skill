@@ -36,7 +36,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Documentation (DOCS)
 
-- [ ] **DOCS-01**: Project README with installation instructions, Skill inventory, quick start guide, and contribution guidelines (bilingual)
+- [x] **DOCS-01**: Project README with installation instructions, Skill inventory, quick start guide, and contribution guidelines (bilingual)
 
 ## v2 Requirements
 
@@ -91,7 +91,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SUPP-01 | Phase 9: Literature and Support Skills | Complete |
 | SUPP-02 | Phase 9: Literature and Support Skills | Complete |
 | SUPP-03 | Phase 9: Literature and Support Skills | Complete |
-| DOCS-01 | Phase 10: Documentation | Pending |
+| DOCS-01 | Phase 10: Documentation | Complete |
 
 **Coverage:**
 - v1 requirements: 16 total
