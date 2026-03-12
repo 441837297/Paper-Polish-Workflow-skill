@@ -169,7 +169,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 10-01: TBD
+- [ ] 10-01-PLAN.md — Write bilingual README.md with installation, Skill inventory, quick-start scenarios, and contribution guide
 
 ## Progress
 
