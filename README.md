@@ -1,174 +1,182 @@
 # Paper Polish Workflow
 
-[English](README.md) | [中文](README_CN.md)
+**An 11-Skill suite for academic paper writing, polishing, and submission — powered by Claude Code.**
 
-A systematic, AI-assisted workflow for polishing academic papers. Designed for use with Claude/OpenCode AI assistants.
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)
 
-## What is this?
+---
 
-An AI skill that guides you through paper polishing **step by step**:
+[English](#english) | [中文](#chinese)
 
-```
-Structure → Sentence Logic → Expression
-```
+---
 
-Instead of making arbitrary changes, the AI helps you:
-1. Confirm the overall structure of each section
-2. Confirm the logic of each sentence
-3. Select from multiple expression options
-4. Check consistency and coherence
-
-## Features
-
-- **Top-down approach**: Never jumps to wording before confirming logic
-- **User-led**: Every step requires your confirmation
-- **Option-based**: Uses interactive selection for efficient choices
-- **Reference-driven**: Consults reusable reference libraries instead of duplicating long prompt tables
-- **Journal-aware**: Includes a stable CEUS journal contract (extensible to other journals)
-- **Modular references**: Keeps stable overview files plus narrower leaf modules for on-demand loading
+<a name="english"></a>
 
 ## Installation
 
-### For OpenCode Users
+Paste this repository's GitHub URL into Claude Code and say:
 
-```bash
-# Copy the skill directory to your project
-cp -r paper-polish-workflow/ .opencode/skills/
-```
+> "Please install the skills from this repository to my `.claude/skills/` directory."
 
-### For Claude Code Users
+Claude Code will clone the repository and copy each Skill directory into `.claude/skills/`. No manual shell commands are needed.
 
-```bash
-# Copy the skill directory
-cp -r paper-polish-workflow/ .claude/skills/
-```
+### Semantic Scholar MCP Setup (for literature-skill)
+
+`literature-skill` requires the Semantic Scholar MCP server to search academic literature. To enable it:
+
+1. Open Claude Code settings.
+2. Navigate to **MCP Servers**.
+3. Add the Semantic Scholar MCP server (server key: `semanticscholar`).
+4. Restart Claude Code.
+
+Once set up, you can trigger literature searches directly from your Claude Code session.
+
+---
+
+## Skill Inventory
+
+### Writing Workflow
+
+| Skill | Trigger Examples | Description |
+|-------|-----------------|-------------|
+| `translation-skill` | `Translate this Chinese draft to English` / `翻译这段中文为英文` | Translate Chinese academic text into polished English for journal submission. Produces LaTeX output with bilingual comparison. |
+| `polish-skill` | `Polish this paragraph` / `润色这段英文` | Polish English academic text through quick-fix or guided multi-pass workflow. Adapts to journal style with in-place editing and change tracking. |
+| `de-ai-skill` | `De-AI this paragraph` / `降AI这段论文` | Detect and rewrite AI-generated patterns in English academic text. Two-phase workflow: scan with risk tagging, then batch rewrite. |
+| `reviewer-simulation-skill` | `Review this paper` / `审稿这篇论文` | Simulate peer review of academic papers with structured bilingual feedback report, scoring, and actionable suggestions. |
+
+### Support Tools
+
+| Skill | Trigger Examples | Description |
+|-------|-----------------|-------------|
+| `abstract-skill` | `Write an abstract for my paper` / `帮我写摘要` | Generate or optimize abstracts using the 5-sentence Farquhar formula. Supports generate-from-scratch and restructure-existing paths. |
+| `cover-letter-skill` | `Write a cover letter for my CEUS submission` / `帮我写投稿信` | Generate submission-ready cover letters with contribution statement, data availability, conflict of interest, and contact block. |
+| `experiment-skill` | `Analyze my experiment results` / `帮我分析实验结果` | Analyze experiment results and generate grounded discussion paragraphs. Two-phase: extract findings, then write discussion. |
+| `caption-skill` | `Write a caption for my figure` / `帮我写图表标题` | Generate or optimize figure/table captions for academic papers. Geography-aware: study area, CRS notation, data source. |
+| `logic-skill` | `Check the logic of my paper` / `检查我的论文逻辑` | Verify logical consistency across paper sections. Traces argument chains and identifies gaps, unsupported claims, terminology inconsistencies, and number contradictions. |
+| `literature-skill` | `Find papers about urban heat island` / `帮我找关于城市热岛的文献` | Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries. ⚠️ Requires Semantic Scholar MCP |
+| `visualization-skill` | `What chart should I use for this data?` / `帮我选择合适的可视化方式` | Recommend appropriate chart types for experimental data with rationale and tool hints. Geography-aware: choropleth, spatial scatter, kernel density when spatial data detected. |
+
+---
 
 ## Quick Start
 
-Simply ask the AI to polish your paper:
+### Scenario 1: Paper Submission Chain
 
-```
-User: Help me polish the abstract
+Use this chain to take a Chinese draft all the way to a reviewer-ready English manuscript:
 
-AI: [Phase 0]
-    - What is the target journal?
-    - Where are the example papers?
+1. **translation-skill** — Translate your Chinese draft into academic English with LaTeX output.
+2. **polish-skill** — Polish the English text for journal submission style, with change tracking.
+3. **de-ai-skill** — Scan for AI-generated patterns and rewrite flagged passages.
+4. **reviewer-simulation-skill** — Get a structured peer review report with scores and actionable suggestions before submission.
 
-User: CEUS, examples in docs/example
+### Scenario 2: Figure and Table Assistance
 
-AI: [Step 1] Presents structure for confirmation...
-AI: [Step 2] Presents per-sentence logic...
-AI: [Step 3] Presents expression options...
-AI: [Step 5] Checks coherence, suggests transitions...
-AI: Writes polished version to file
-```
+Use these Skills together when preparing figures and tables:
 
-## Workflow Steps
+1. **caption-skill** — Generate or improve a figure or table caption, with geography-aware metadata for maps.
+2. **visualization-skill** — Get chart type recommendations for your experimental data, with tool hints.
 
-| Step | What Happens |
-|------|--------------|
-| **Phase 0** | AI asks about target journal, word limits, example papers |
-| **Step 1** | AI presents section structure for confirmation |
-| **Step 2** | AI presents per-sentence logic for confirmation |
-| **Step 3** | AI presents expression options (multiple choice) |
-| **Step 4** | AI consults example papers if needed |
-| **Step 5** | AI checks repetition and coherence |
-| **Write** | AI presents final version and writes to file |
+### Scenario 3: Literature Search Chain
 
-## Authoring New Skills
+Use this chain to build a grounded bibliography and write a strong abstract:
 
-All new Skills must follow the project's Skill conventions. Start here:
+1. **literature-skill** — Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries.
+2. **abstract-skill** — Generate or restructure your abstract using the 5-sentence Farquhar formula.
 
-- [`references/skill-conventions.md`](references/skill-conventions.md): canonical authoring rules (frontmatter contract, modes, fallbacks, line budget)
-- [`references/skill-skeleton.md`](references/skill-skeleton.md): copyable example skeleton to use as a starting point
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed authoring guidance.
-
-## Shared References
-
-The project uses stable reference entrypoints plus narrower leaf modules.
-
-### Stable Entry Points
-
-- [`references/expression-patterns.md`](references/expression-patterns.md): overview and module map for academic expression patterns
-- [`references/anti-ai-patterns.md`](references/anti-ai-patterns.md): overview and risk model for anti-AI rewriting
-- [`references/journals/ceus.md`](references/journals/ceus.md): CEUS journal contract
-- [`references/skill-conventions.md`](references/skill-conventions.md): Skill authoring conventions
-- [`references/skill-skeleton.md`](references/skill-skeleton.md): copyable Skill template
-
-### Why this structure?
-
-- Skills can keep using stable top-level paths.
-- Longer workflows can load only the relevant leaf module under `references/expression-patterns/` or `references/anti-ai-patterns/`.
-- Future journal templates can follow the same stable `references/journals/[journal].md` contract.
-- New Skills start from the skeleton and follow the conventions, ensuring consistency across the suite.
-
-## Supported Journals
-
-### CEUS (Computers, Environment and Urban Systems)
-
-Built-in support for:
-- Word limits (<=8,000 total, <=250 abstract)
-- Highlights generation (3-5 items, <=85 chars each)
-- Writing preferences and quality checks
-- Section-by-section guidance for downstream Skills
-
-See [`references/journals/ceus.md`](references/journals/ceus.md) for the current contract.
-
-### Adding Other Journals
-
-Create a new file in `references/journals/` following the CEUS heading contract:
-- `## Submission Requirements`
-- `## Writing Preferences`
-- `## Quality Checks`
-- `## Section Guidance`
-
-## Project Structure
-
-```text
-paper-polish-workflow/
-├── paper-polish-workflow/
-│   └── SKILL.md
-├── references/
-│   ├── skill-conventions.md            # Skill authoring conventions
-│   ├── skill-skeleton.md               # Copyable Skill template
-│   ├── expression-patterns.md          # Stable overview entrypoint
-│   ├── expression-patterns/            # Scenario-based expression modules
-│   ├── anti-ai-patterns.md             # Stable anti-AI entrypoint
-│   ├── anti-ai-patterns/               # Risk-tiered anti-AI modules
-│   └── journals/
-│       └── ceus.md                     # Stable CEUS journal contract
-├── examples/
-│   └── abstract-polishing-session.md
-├── README.md
-├── README_CN.md
-├── CONTRIBUTING.md
-└── CONTRIBUTING_CN.md
-```
-
-## Requirements
-
-- OpenCode or Claude Code with tool access
-- Tools needed:
-  - `mcp_question` - for option selection
-  - `mcp_read`, `mcp_write` - for file operations
-  - `mcp_look_at` - for PDF analysis (optional)
-
-## Example Session
-
-See [examples/abstract-polishing-session.md](examples/abstract-polishing-session.md) for a complete walkthrough.
+---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Contributions are especially useful for:
-- New journal contracts under `references/journals/`
-- New expression modules under `references/expression-patterns/`
-- New anti-AI modules under `references/anti-ai-patterns/`
+Found a bug or have a feature request? Open an issue on GitHub:
 
-## License
+- **Bug reports** — describe the unexpected behavior, which Skill triggered it, and your input.
+- **Feature requests** — describe the writing task you want to automate and the expected output.
 
-MIT License - See [LICENSE](LICENSE) for details.
+This section covers issue feedback only. Skill authoring conventions and the Skill skeleton template are available in `references/skill-conventions.md` and `references/skill-skeleton.md` for reference.
 
-## Acknowledgments
+---
 
-Developed through iterative refinement while polishing a dual-layer urban perception paper for CEUS journal submission.
+<a name="chinese"></a>
+
+## 安装说明
+
+将本仓库的 GitHub 地址粘贴到 Claude Code 中，并说：
+
+> "请将这个仓库中的 skills 安装到我的 `.claude/skills/` 目录。"
+
+Claude Code 会自动克隆仓库并将每个 Skill 目录复制到 `.claude/skills/`，无需手动执行任何 Shell 命令。
+
+### Semantic Scholar MCP 配置（适用于 literature-skill）
+
+`literature-skill` 需要 Semantic Scholar MCP 服务器来检索学术文献。配置步骤如下：
+
+1. 打开 Claude Code 设置。
+2. 进入 **MCP Servers**（MCP 服务器）。
+3. 添加 Semantic Scholar MCP 服务器（服务器键名：`semanticscholar`）。
+4. 重启 Claude Code。
+
+配置完成后，即可在 Claude Code 会话中直接触发文献检索。
+
+---
+
+## 技能清单
+
+### 写作工作流
+
+| 技能 | 触发示例 | 功能描述 |
+|------|---------|---------|
+| `translation-skill` | `Translate this Chinese draft to English` / `翻译这段中文为英文` | 将中文学术草稿翻译为投稿级英文，生成 LaTeX 格式输出，包含中英文对照版本。 |
+| `polish-skill` | `Polish this paragraph` / `润色这段英文` | 通过快速修复或引导式多轮工作流润色英文学术文本，支持期刊风格适配与原地编辑追踪。 |
+| `de-ai-skill` | `De-AI this paragraph` / `降AI这段论文` | 检测并改写英文学术文本中的 AI 生成痕迹，两阶段工作流：扫描标记风险，再批量改写。 |
+| `reviewer-simulation-skill` | `Review this paper` / `审稿这篇论文` | 模拟同行评审，生成结构化双语审稿报告，包含评分与可操作的改进建议。 |
+
+### 辅助工具
+
+| 技能 | 触发示例 | 功能描述 |
+|------|---------|---------|
+| `abstract-skill` | `Write an abstract for my paper` / `帮我写摘要` | 使用五句话 Farquhar 公式生成或优化摘要，支持从零生成和改写现有摘要两条路径。 |
+| `cover-letter-skill` | `Write a cover letter for my CEUS submission` / `帮我写投稿信` | 生成投稿信，包含贡献声明、数据可用性声明、利益冲突声明和联系方式。 |
+| `experiment-skill` | `Analyze my experiment results` / `帮我分析实验结果` | 分析实验结果并生成有依据的讨论段落，两阶段：提取发现，再生成讨论。 |
+| `caption-skill` | `Write a caption for my figure` / `帮我写图表标题` | 生成或优化学术论文的图表标题，地理感知：支持研究区域、坐标系标注和数据来源。 |
+| `logic-skill` | `Check the logic of my paper` / `检查我的论文逻辑` | 验证论文各章节的逻辑一致性，追踪论证链，识别逻辑断裂、无支撑声明、术语不一致和数字矛盾。 |
+| `literature-skill` | `Find papers about urban heat island` / `帮我找关于城市热岛的文献` | 通过 Semantic Scholar MCP 检索学术文献并生成经过验证的 BibTeX 引用。⚠️ 需要 Semantic Scholar MCP |
+| `visualization-skill` | `What chart should I use for this data?` / `帮我选择合适的可视化方式` | 为实验数据推荐合适的图表类型，提供理由和工具提示，地理感知：空间数据时推荐分级地图、空间散点图等。 |
+
+---
+
+## 快速上手
+
+### 场景一：论文投稿流程
+
+使用此工作链，将中文草稿一步步推进到可投稿的英文论文：
+
+1. **translation-skill** — 将中文草稿翻译为学术英文，输出 LaTeX 格式。
+2. **polish-skill** — 对英文文本进行期刊级润色，保留修改记录。
+3. **de-ai-skill** — 扫描 AI 生成痕迹，对标记段落进行改写。
+4. **reviewer-simulation-skill** — 在投稿前获取包含评分和可操作建议的结构化模拟审稿报告。
+
+### 场景二：图表辅助
+
+准备图表时，配合使用这两个技能：
+
+1. **caption-skill** — 生成或改进图表标题，地图类图表支持地理元数据。
+2. **visualization-skill** — 为实验数据推荐图表类型，附工具提示。
+
+### 场景三：文献搜索流程
+
+使用此工作链构建有依据的参考文献并撰写摘要：
+
+1. **literature-skill** — 通过 Semantic Scholar MCP 检索文献并生成经验证的 BibTeX 引用。
+2. **abstract-skill** — 使用五句话 Farquhar 公式生成或改写摘要。
+
+---
+
+## 参与贡献
+
+发现了 Bug 或有功能需求？请在 GitHub 上提交 Issue：
+
+- **Bug 反馈** — 描述异常行为、触发的 Skill 名称以及你的输入内容。
+- **功能需求** — 描述你想要自动化的写作任务和期望的输出结果。
+
+本节仅涵盖 Issue 反馈。Skill 编写规范和 Skill 骨架模板请参考 `references/skill-conventions.md` 和 `references/skill-skeleton.md`。
