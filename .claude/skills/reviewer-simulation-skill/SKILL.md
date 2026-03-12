@@ -181,18 +181,17 @@ Write the review report in the following locked structure:
 > **[Chinese]** [Chinese translation of recommendation and summary]
 ```
 
+**Chinese translation rules:**
+- Use inline blockquote format (`> **[Chinese]** ...`) immediately after each concern's English text.
+- Preserve domain terminology precisely in Chinese (e.g., "ablation study" as "消融实验", not a generic paraphrase).
+- Each Chinese blockquote covers all three parts (problem, why, suggestion) in a single block.
+- The Verdict section also receives an inline Chinese translation.
+
 ### Step 4: Output
 
 - **File input:** Write the review report to `{input_filename_without_ext}_review.md` in the same directory as the input file. If input filename is unclear, use `review-report.md`.
 - **Pasted text input:** Present the complete review report directly in conversation.
 - Report the total number of major concerns, minor concerns, and questions identified.
-
-## Chinese Translation Guidelines
-
-- Use inline blockquote format (`> **[Chinese]** ...`) immediately after each concern's English text.
-- Preserve domain terminology precisely in Chinese (e.g., "ablation study" as "消融实验", not a generic paraphrase).
-- Each Chinese blockquote covers all three parts (problem, why, suggestion) in a single block.
-- The Verdict section also receives an inline Chinese translation.
 
 ## Output Contract
 
