@@ -8,8 +8,9 @@ Thumbs.db
 *.swp
 *.swo
 
-# Node (for CI)
+# Node
 node_modules/
+*.tgz
 
 # Sisyphus work files
 .sisyphus/drafts/

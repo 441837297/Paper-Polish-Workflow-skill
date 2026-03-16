@@ -1,111 +1,14 @@
 # Paper Polish Workflow
 
-**An 11-Skill suite for academic paper writing, polishing, and submission — powered by Claude Code.**
+**11 项学术论文写作、润色与投稿技能套件 —— 基于 Claude Code 驱动。**
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)
+![npm](https://img.shields.io/npm/v/@lylll9436/paper-polish-workflow-skill?registry_uri=https%3A%2F%2Fnpm.pkg.github.com)
 
 ---
 
-[English](#english) | [中文](#chinese)
-
----
-
-<a name="english"></a>
-
-## Installation
-
-Paste this repository's GitHub URL into Claude Code and say:
-
-> "Please install the skills from this repository to my `.claude/skills/` directory."
-
-Claude Code will clone the repository and copy each Skill directory into `.claude/skills/`. No manual shell commands are needed.
-
-### Semantic Scholar MCP Setup (for literature-skill)
-
-`literature-skill` requires the Semantic Scholar MCP server to search academic literature. To enable it:
-
-1. Open Claude Code settings.
-2. Navigate to **MCP Servers**.
-3. Add the Semantic Scholar MCP server (server key: `semanticscholar`).
-4. Restart Claude Code.
-
-Once set up, you can trigger literature searches directly from your Claude Code session.
-
----
-
-## Skill Inventory
-
-### Writing Workflow
-
-| Skill | Trigger Examples | Description |
-|-------|-----------------|-------------|
-| `translation-skill` | `Translate this Chinese draft to English` / `翻译这段中文为英文` | Translate Chinese academic text into polished English for journal submission. Produces LaTeX output with bilingual comparison. |
-| `polish-skill` | `Polish this paragraph` / `润色这段英文` | Polish English academic text through quick-fix or guided multi-pass workflow. Adapts to journal style with in-place editing and change tracking. |
-| `de-ai-skill` | `De-AI this paragraph` / `降AI这段论文` | Detect and rewrite AI-generated patterns in English academic text. Two-phase workflow: scan with risk tagging, then batch rewrite. |
-| `reviewer-simulation-skill` | `Review this paper` / `审稿这篇论文` | Simulate peer review of academic papers with structured bilingual feedback report, scoring, and actionable suggestions. |
-
-### Support Tools
-
-| Skill | Trigger Examples | Description |
-|-------|-----------------|-------------|
-| `abstract-skill` | `Write an abstract for my paper` / `帮我写摘要` | Generate or optimize abstracts using the 5-sentence Farquhar formula. Supports generate-from-scratch and restructure-existing paths. |
-| `cover-letter-skill` | `Write a cover letter for my CEUS submission` / `帮我写投稿信` | Generate submission-ready cover letters with contribution statement, data availability, conflict of interest, and contact block. |
-| `experiment-skill` | `Analyze my experiment results` / `帮我分析实验结果` | Analyze experiment results and generate grounded discussion paragraphs. Two-phase: extract findings, then write discussion. |
-| `caption-skill` | `Write a caption for my figure` / `帮我写图表标题` | Generate or optimize figure/table captions for academic papers. Geography-aware: study area, CRS notation, data source. |
-| `logic-skill` | `Check the logic of my paper` / `检查我的论文逻辑` | Verify logical consistency across paper sections. Traces argument chains and identifies gaps, unsupported claims, terminology inconsistencies, and number contradictions. |
-| `literature-skill` | `Find papers about urban heat island` / `帮我找关于城市热岛的文献` | Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries. ⚠️ Requires Semantic Scholar MCP |
-| `visualization-skill` | `What chart should I use for this data?` / `帮我选择合适的可视化方式` | Recommend appropriate chart types for experimental data with rationale and tool hints. Geography-aware: choropleth, spatial scatter, kernel density when spatial data detected. |
-
----
-
-## Quick Start
-
-### Scenario 1: Paper Submission Chain
-
-Use this chain to take a Chinese draft all the way to a reviewer-ready English manuscript:
-
-1. **translation-skill** — Translate your Chinese draft into academic English with LaTeX output.
-2. **polish-skill** — Polish the English text for journal submission style, with change tracking.
-3. **de-ai-skill** — Scan for AI-generated patterns and rewrite flagged passages.
-4. **reviewer-simulation-skill** — Get a structured peer review report with scores and actionable suggestions before submission.
-
-### Scenario 2: Figure and Table Assistance
-
-Use these Skills together when preparing figures and tables:
-
-1. **caption-skill** — Generate or improve a figure or table caption, with geography-aware metadata for maps.
-2. **visualization-skill** — Get chart type recommendations for your experimental data, with tool hints.
-
-### Scenario 3: Literature Search Chain
-
-Use this chain to build a grounded bibliography and write a strong abstract:
-
-1. **literature-skill** — Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries.
-2. **abstract-skill** — Generate or restructure your abstract using the 5-sentence Farquhar formula.
-
----
-
-## Contributing
-
-Found a bug or have a feature request? Open an issue on GitHub:
-
-- **Bug reports** — describe the unexpected behavior, which Skill triggered it, and your input.
-- **Feature requests** — describe the writing task you want to automate and the expected output.
-
-This section covers issue feedback only. Skill authoring conventions and the Skill skeleton template are available in `references/skill-conventions.md` and `references/skill-skeleton.md` for reference.
-
----
-
-## Acknowledgements
-
-The core writing Skills in this project are adapted from the prompt templates in [**awesome-ai-research-writing**](https://github.com/Leey21/awesome-ai-research-writing) — a curated collection of academic writing prompts from top research labs (MSRA, Seed, Shanghai AI Lab) and universities (PKU, USTC, SJTU). This project restructures those prompts as modular Claude Code Skills with YAML frontmatter, shared reference libraries, and interactive multi-step workflows.
-
-Specifically adapted: translation, polish, de-AI, reviewer simulation, abstract, caption, logic verification, experiment analysis, and visualization recommendation. Cover letter and literature search Skills are original extensions.
-
-The 5-sentence abstract structure in `abstract-skill` is based on the **Farquhar formula**.
-
-The development workflow (planning, phase execution, milestones, verification) is powered by [**get-shit-done**](https://github.com/gsd-build/get-shit-done) — a structured Claude Code workflow framework for shipping software with AI agents.
+[中文](#chinese) | [English](#english)
 
 ---
 
@@ -113,11 +16,31 @@ The development workflow (planning, phase execution, milestones, verification) i
 
 ## 安装说明
 
-将本仓库的 GitHub 地址粘贴到 Claude Code 中，并说：
+### 方式一：通过 GitHub Packages 安装（推荐）
 
-> "请将这个仓库中的 skills 安装到我的 `.claude/skills/` 目录。"
+```bash
+# 1. 配置 npm 使用 GitHub Packages registry
+echo "@lylll9436:registry=https://npm.pkg.github.com" >> ~/.npmrc
 
-Claude Code 会自动克隆仓库并将每个 Skill 目录复制到 `.claude/skills/`，无需手动执行任何 Shell 命令。
+# 2. 安装包
+npm install @lylll9436/paper-polish-workflow-skill
+
+# 3. 将 skills 复制到你的项目中
+cp -r node_modules/@lylll9436/paper-polish-workflow-skill/.claude/skills/* .claude/skills/
+cp -r node_modules/@lylll9436/paper-polish-workflow-skill/references/ .claude/references/
+```
+
+### 方式二：通过 Claude Code 安装
+
+将以下 prompt 直接粘贴到 Claude Code 中执行：
+
+> 请从 GitHub Packages 安装 `@lylll9436/paper-polish-workflow-skill` 到当前项目：
+>
+> 1. 在 `~/.npmrc` 中添加 `@lylll9436:registry=https://npm.pkg.github.com`（如果还没有的话）
+> 2. 运行 `npm install @lylll9436/paper-polish-workflow-skill`
+> 3. 将 `node_modules/@lylll9436/paper-polish-workflow-skill/.claude/skills/` 下所有子目录复制到当前项目的 `.claude/skills/`
+> 4. 将 `node_modules/@lylll9436/paper-polish-workflow-skill/references/` 复制到 `.claude/references/`
+> 5. 安装完成后清理 node_modules
 
 ### Semantic Scholar MCP 配置（适用于 literature-skill）
 
@@ -204,3 +127,121 @@ Claude Code 会自动克隆仓库并将每个 Skill 目录复制到 `.claude/ski
 `abstract-skill` 中的 5 句摘要结构采用 **Farquhar formula**。
 
 本项目的开发工作流（规划、阶段执行、里程碑管理、验证）由 [**get-shit-done**](https://github.com/gsd-build/get-shit-done) 提供支持——一套基于 Claude Code 的结构化 AI 协作开发框架。
+
+---
+
+<a name="english"></a>
+
+## Installation
+
+### Option 1: Install via GitHub Packages (Recommended)
+
+```bash
+# 1. Configure npm to use GitHub Packages registry
+echo "@lylll9436:registry=https://npm.pkg.github.com" >> ~/.npmrc
+
+# 2. Install the package
+npm install @lylll9436/paper-polish-workflow-skill
+
+# 3. Copy skills into your project
+cp -r node_modules/@lylll9436/paper-polish-workflow-skill/.claude/skills/* .claude/skills/
+cp -r node_modules/@lylll9436/paper-polish-workflow-skill/references/ .claude/references/
+```
+
+### Option 2: Install via Claude Code
+
+Paste the following prompt directly into Claude Code:
+
+> Install `@lylll9436/paper-polish-workflow-skill` from GitHub Packages into the current project:
+>
+> 1. Add `@lylll9436:registry=https://npm.pkg.github.com` to `~/.npmrc` if not already present
+> 2. Run `npm install @lylll9436/paper-polish-workflow-skill`
+> 3. Copy all subdirectories from `node_modules/@lylll9436/paper-polish-workflow-skill/.claude/skills/` to `.claude/skills/` in the current project
+> 4. Copy `node_modules/@lylll9436/paper-polish-workflow-skill/references/` to `.claude/references/`
+> 5. Clean up node_modules after installation
+
+### Semantic Scholar MCP Setup (for literature-skill)
+
+`literature-skill` requires the Semantic Scholar MCP server to search academic literature. To enable it:
+
+1. Open Claude Code settings.
+2. Navigate to **MCP Servers**.
+3. Add the Semantic Scholar MCP server (server key: `semanticscholar`).
+4. Restart Claude Code.
+
+Once set up, you can trigger literature searches directly from your Claude Code session.
+
+---
+
+## Skill Inventory
+
+### Writing Workflow
+
+| Skill | Trigger Examples | Description |
+|-------|-----------------|-------------|
+| `translation-skill` | `Translate this Chinese draft to English` / `翻译这段中文为英文` | Translate Chinese academic text into polished English for journal submission. Produces LaTeX output with bilingual comparison. |
+| `polish-skill` | `Polish this paragraph` / `润色这段英文` | Polish English academic text through quick-fix or guided multi-pass workflow. Adapts to journal style with in-place editing and change tracking. |
+| `de-ai-skill` | `De-AI this paragraph` / `降AI这段论文` | Detect and rewrite AI-generated patterns in English academic text. Two-phase workflow: scan with risk tagging, then batch rewrite. |
+| `reviewer-simulation-skill` | `Review this paper` / `审稿这篇论文` | Simulate peer review of academic papers with structured bilingual feedback report, scoring, and actionable suggestions. |
+
+### Support Tools
+
+| Skill | Trigger Examples | Description |
+|-------|-----------------|-------------|
+| `abstract-skill` | `Write an abstract for my paper` / `帮我写摘要` | Generate or optimize abstracts using the 5-sentence Farquhar formula. Supports generate-from-scratch and restructure-existing paths. |
+| `cover-letter-skill` | `Write a cover letter for my CEUS submission` / `帮我写投稿信` | Generate submission-ready cover letters with contribution statement, data availability, conflict of interest, and contact block. |
+| `experiment-skill` | `Analyze my experiment results` / `帮我分析实验结果` | Analyze experiment results and generate grounded discussion paragraphs. Two-phase: extract findings, then write discussion. |
+| `caption-skill` | `Write a caption for my figure` / `帮我写图表标题` | Generate or optimize figure/table captions for academic papers. Geography-aware: study area, CRS notation, data source. |
+| `logic-skill` | `Check the logic of my paper` / `检查我的论文逻辑` | Verify logical consistency across paper sections. Traces argument chains and identifies gaps, unsupported claims, terminology inconsistencies, and number contradictions. |
+| `literature-skill` | `Find papers about urban heat island` / `帮我找关于城市热岛的文献` | Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries. ⚠️ Requires Semantic Scholar MCP |
+| `visualization-skill` | `What chart should I use for this data?` / `帮我选择合适的可视化方式` | Recommend appropriate chart types for experimental data with rationale and tool hints. Geography-aware: choropleth, spatial scatter, kernel density when spatial data detected. |
+
+---
+
+## Quick Start
+
+### Scenario 1: Paper Submission Chain
+
+Use this chain to take a Chinese draft all the way to a reviewer-ready English manuscript:
+
+1. **translation-skill** — Translate your Chinese draft into academic English with LaTeX output.
+2. **polish-skill** — Polish the English text for journal submission style, with change tracking.
+3. **de-ai-skill** — Scan for AI-generated patterns and rewrite flagged passages.
+4. **reviewer-simulation-skill** — Get a structured peer review report with scores and actionable suggestions before submission.
+
+### Scenario 2: Figure and Table Assistance
+
+Use these Skills together when preparing figures and tables:
+
+1. **caption-skill** — Generate or improve a figure or table caption, with geography-aware metadata for maps.
+2. **visualization-skill** — Get chart type recommendations for your experimental data, with tool hints.
+
+### Scenario 3: Literature Search Chain
+
+Use this chain to build a grounded bibliography and write a strong abstract:
+
+1. **literature-skill** — Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries.
+2. **abstract-skill** — Generate or restructure your abstract using the 5-sentence Farquhar formula.
+
+---
+
+## Contributing
+
+Found a bug or have a feature request? Open an issue on GitHub:
+
+- **Bug reports** — describe the unexpected behavior, which Skill triggered it, and your input.
+- **Feature requests** — describe the writing task you want to automate and the expected output.
+
+This section covers issue feedback only. Skill authoring conventions and the Skill skeleton template are available in `references/skill-conventions.md` and `references/skill-skeleton.md` for reference.
+
+---
+
+## Acknowledgements
+
+The core writing Skills in this project are adapted from the prompt templates in [**awesome-ai-research-writing**](https://github.com/Leey21/awesome-ai-research-writing) — a curated collection of academic writing prompts from top research labs (MSRA, Seed, Shanghai AI Lab) and universities (PKU, USTC, SJTU). This project restructures those prompts as modular Claude Code Skills with YAML frontmatter, shared reference libraries, and interactive multi-step workflows.
+
+Specifically adapted: translation, polish, de-AI, reviewer simulation, abstract, caption, logic verification, experiment analysis, and visualization recommendation. Cover letter and literature search Skills are original extensions.
+
+The 5-sentence abstract structure in `abstract-skill` is based on the **Farquhar formula**.
+
+The development workflow (planning, phase execution, milestones, verification) is powered by [**get-shit-done**](https://github.com/gsd-build/get-shit-done) — a structured Claude Code workflow framework for shipping software with AI agents.
