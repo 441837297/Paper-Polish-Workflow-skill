@@ -68,30 +68,30 @@ Deferred beyond v2.0.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| REPO-01 | — | Pending |
-| REPO-02 | — | Pending |
-| REPO-03 | — | Pending |
-| REPO-04 | — | Pending |
-| REPO-05 | — | Pending |
-| REPO-06 | — | Pending |
-| REPO-07 | — | Pending |
-| REPO-08 | — | Pending |
-| BILN-01 | — | Pending |
-| BILN-02 | — | Pending |
-| BILN-03 | — | Pending |
-| BILN-04 | — | Pending |
-| UXFIX-01 | — | Pending |
-| UXFIX-02 | — | Pending |
-| UXFIX-03 | — | Pending |
-| DEBT-01 | — | Pending |
-| DEBT-02 | — | Pending |
-| DEBT-03 | — | Pending |
+| REPO-01 | Phase 14 | Pending |
+| REPO-02 | Phase 14 | Pending |
+| REPO-03 | Phase 14 | Pending |
+| REPO-04 | Phase 15 | Pending |
+| REPO-05 | Phase 14 | Pending |
+| REPO-06 | Phase 16 | Pending |
+| REPO-07 | Phase 16 | Pending |
+| REPO-08 | Phase 14 | Pending |
+| BILN-01 | Phase 16 | Pending |
+| BILN-02 | Phase 13 | Pending |
+| BILN-03 | Phase 13 | Pending |
+| BILN-04 | Phase 17 | Pending |
+| UXFIX-01 | Phase 12 | Pending |
+| UXFIX-02 | Phase 11 | Pending |
+| UXFIX-03 | Phase 18 | Pending |
+| DEBT-01 | Phase 11 | Pending |
+| DEBT-02 | Phase 11 | Pending |
+| DEBT-03 | Phase 11 | Pending |
 
 **Coverage:**
-- v2.0 requirements: 16 total
-- Mapped to phases: 0
-- Unmapped: 16 ⚠️
+- v2.0 requirements: 18 total
+- Mapped to phases: 18
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-17*
-*Last updated: 2026-03-17 after initial definition*
+*Last updated: 2026-03-17 — traceability updated after roadmap creation*
