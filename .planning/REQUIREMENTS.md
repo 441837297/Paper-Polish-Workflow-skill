@@ -23,7 +23,7 @@ Requirements for v2.0 milestone: Repo-to-Paper & Bilingual Enhancement.
 - [x] **BILN-01**: Repo-to-paper output includes paragraph-by-paragraph English + Chinese comparison
 - [x] **BILN-02**: Bilingual output format standardized: LaTeX comment for .tex output, markdown blockquote for .md output
 - [x] **BILN-03**: Shared bilingual reference file `references/bilingual-output.md` created as pattern documentation
-- [ ] **BILN-04**: 7 existing Skills updated to support bilingual output (translation, polish, de-ai, reviewer, abstract, experiment, logic)
+- [x] **BILN-04**: 7 existing Skills updated to support bilingual output (translation, polish, de-ai, reviewer, abstract, experiment, logic)
 
 ### UX Fix
 
@@ -79,7 +79,7 @@ Deferred beyond v2.0.
 | BILN-01 | Phase 16 | Complete |
 | BILN-02 | Phase 13 | Complete |
 | BILN-03 | Phase 13 | Complete |
-| BILN-04 | Phase 17 | Pending |
+| BILN-04 | Phase 17 | Complete |
 | UXFIX-01 | Phase 12 | Complete |
 | UXFIX-02 | Phase 11 | Complete |
 | UXFIX-03 | Phase 18 | Pending |
