@@ -19,6 +19,7 @@ tools:
 references:
   required:
     - references/expression-patterns.md
+    - references/bilingual-output.md
   leaf_hints:
     - references/expression-patterns/introduction-and-gap.md
     - references/expression-patterns/methods-and-data.md
@@ -136,6 +137,7 @@ This Skill translates Chinese academic drafts into polished English text ready f
 
 ### Step 3: Generate Output Files
 
+- **Opt-out check:** Before generating output, scan the user's original trigger prompt for any of these phrases (case-insensitive, exact phrase match): `english only`, `no bilingual`, `only english`, `不要中文`. If any phrase is detected: skip the bilingual file entirely -- produce only `[name]_en.tex`. If none detected: produce both files as normal.
 - Write English-only version to `[name]_en.tex` with a header comment:
   ```
   % Translated from: [source file]
@@ -161,7 +163,7 @@ This Skill translates Chinese academic drafts into polished English text ready f
 | Output | Format | Condition |
 |--------|--------|-----------|
 | `english_tex` | LaTeX file (`[name]_en.tex`) | Always produced |
-| `bilingual_tex` | LaTeX file (`[name]_bilingual.tex`) | Always produced |
+| `bilingual_tex` | LaTeX file (`[name]_bilingual.tex`) | Always produced unless opt-out keyword detected |
 | `self_check_summary` | Markdown in session | Always produced |
 
 ## Edge Cases
