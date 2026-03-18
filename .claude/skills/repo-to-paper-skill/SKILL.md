@@ -3,7 +3,9 @@ name: repo-to-paper-skill
 description: >-
   Scan an experiment repo and generate a complete paper outline (H1/H2/H3)
   with user approval checkpoints at each level. Python ML repos.
+  Collects literature references via Semantic Scholar MCP at H2 stage.
   扫描实验仓库，逐级生成论文大纲（H1/H2/H3），每级用户确认后推进。
+  H2阶段通过Semantic Scholar MCP自动收集文献引用。
 triggers:
   primary_intent: generate paper outline from experiment repo
   examples:
@@ -17,6 +19,7 @@ tools:
   - Read
   - Write
   - Structured Interaction
+  - External MCP
 references:
   required:
     - references/repo-patterns.md
@@ -28,6 +31,7 @@ input_modes:
 output_contract:
   - scan_summary
   - paper_outline
+  - literature_refs
 ---
 
 ## Purpose
@@ -37,7 +41,9 @@ This Skill scans a Python ML experiment repository and generates a hierarchical 
 have completed experiments and need to structure findings into an academic paper. The scan
 categorizes repo files using patterns from `references/repo-patterns.md`, then progressively
 generates headings from coarse (sections) to fine (sub-subsections), with the user confirming
-or modifying each level before proceeding.
+or modifying each level before proceeding. After H2 confirmation, the Skill automatically
+collects academic references via Semantic Scholar MCP and saves them as per-section ref files
+for downstream body generation.
 
 ## Trigger
 
@@ -179,6 +185,89 @@ or modifying each level before proceeding.
 
 ---
 
+### Step 2.5: Literature Collection
+
+**Pre-flight:**
+- Call `mcp__semantic-scholar__papers-search-basic` with `{"query": "test", "limit": 1}`
+- If call succeeds: proceed to literature collection below
+- If call fails or tool unavailable: skip Step 2.5 entirely
+  - Insert `[CITATION NEEDED]` after each H2 subsection description in the outline
+  - Display: "Semantic Scholar MCP not available. Skipping literature collection. [CITATION NEEDED] markers added."
+  - Proceed directly to Step 4 (H3 generation)
+
+**Collect references:**
+
+FOR each H1 section:
+  FOR each H2 subsection under this H1:
+    1. Derive search query: extract 2-5 key technical terms from the H2 title and description,
+       contextualized by the H1 section title. Use English terms only (ignore Chinese translations
+       in bilingual mode). Strip filler words (and, of, the, for).
+       Example: H1="Methods", H2="Gradient Boosting Prediction Framework",
+       description="Feature engineering using street-level semantic segmentation data"
+       -> query: "gradient boosting prediction street-level semantic segmentation"
+    2. Call `mcp__semantic-scholar__papers-search-basic` with `{"query": derived_query, "limit": 10}`
+    3. For each result where the abstract field is empty: call `mcp__semantic-scholar__get-paper-abstract`
+       with the paper's `paperId`. If abstract is still empty after fetch, mark as "Abstract not available"
+    4. Filter results by relevance: assess how many distinct claims/arguments the H2 subsection needs
+       to make, then keep 5-10 papers that best support those claims. Discard papers that are only
+       tangentially related based on title and abstract content
+    5. Display progress line: `✓ 1.1 Research Background: 8 refs found` (or `⚠ 1.1 Research Background: 0 refs found` for zero results)
+    6. If a search call fails mid-batch: mark that H2 as `[CITATION NEEDED]`, display warning, continue to next H2
+  END FOR
+END FOR
+
+**Write ref files:**
+
+Create `{repo_path}/.paper-refs/` directory. Write one Markdown file per H1 section, named by
+the section topic in lowercase (e.g., `introduction.md`, `methods.md`, `results.md`).
+
+Each file uses this structure:
+
+```markdown
+# [H1 Section Title] - References
+
+## [H2 Number] [H2 Subsection Title]
+
+### [FirstAuthor] et al. ([Year])
+**Title:** [Full title from MCP]
+**Authors:** [Author1; Author2; ...]
+**Year:** [YYYY] | **Citations:** [N]
+**Relevance:** [[H2 number] [H2 subsection title]]
+[One-sentence explanation of why this paper is relevant to this subsection]
+
+> [Abstract summary: 1-2 sentences from MCP abstract data. If abstract not available, write "Abstract not available"]
+
+```bibtex
+@article{[citationkey], ...}
+```
+```
+
+BibTeX rules (reuse literature-skill patterns):
+- Citation key format: `firstAuthorLastnameLowercaseYYYYfirstKeyword` (e.g., `smith2023urban`)
+- Entry type: `@article` for journal, `@inproceedings` for conference, `@misc` for preprints (follow MCP paper type)
+- All BibTeX fields MUST come from MCP-returned data. If a field is not in the MCP response, OMIT it
+- If DOI missing, add comment: `% DOI not available -- verify manually`
+- Never fill missing fields from prior knowledge
+
+Duplicate handling: allow same paper to appear in multiple section files. Each file is self-contained.
+
+**Display summary table:**
+
+After all H2 subsections processed, display:
+
+```
+| Section | Subsection | Refs | Top Reference |
+|---------|-----------|------|---------------|
+| 1. Introduction | 1.1 Research Background | 8 | Smith et al. (2023) - 142 citations |
+| ... | ... | ... | ... |
+
+Total: [N] references collected. Confirm to proceed to H3 outline generation.
+```
+
+Wait for user confirmation before proceeding to Step 4.
+
+---
+
 ### Step 4: Generate H3 Outline
 
 **Prepare:**
@@ -205,6 +294,7 @@ or modifying each level before proceeding.
 |--------|--------|-----------|
 | `scan_summary` | Categorized summary table | Always -- Step 1 |
 | `paper_outline` | Hierarchical H1/H2/H3 with descriptions and source annotations | After all steps confirmed |
+| `literature_refs` | Per-section Markdown files in `{repo_path}/.paper-refs/` with reference cards | After Step 2.5 (skipped if MCP unavailable) |
 
 **Bilingual eligibility:** This Skill produces academic text (one-sentence heading descriptions).
 Bilingual mode is ON by default; opt-out via keywords in `references/bilingual-output.md`.
@@ -225,6 +315,10 @@ After final H3 confirmation, offer to save the complete outline to a file using 
 | Non-Python repo | Warn: "Scan patterns are calibrated for Python ML projects. Non-Python files may be miscategorized." Proceed with best-effort |
 | Very large repo (>500 files in top 2 levels) | List only top 10 files per category in scan summary; note total count |
 | All files in one category | Proceed -- outline may be unbalanced; user corrects at confirmation step |
+| Semantic Scholar MCP unavailable | Skip Step 2.5; insert [CITATION NEEDED] markers in outline; proceed to Step 4 |
+| Zero search results for an H2 | Display warning with ⚠ prefix; mark H2 as [CITATION NEEDED]; continue to next H2 |
+| MCP call fails mid-batch | Mark that specific H2 as [CITATION NEEDED]; continue with remaining H2 subsections |
+| Springer papers with empty abstracts | Call get-paper-abstract; if still empty, display "Abstract not available" in ref card; still include paper |
 
 ## Fallbacks
 
@@ -235,6 +329,7 @@ After final H3 confirmation, offer to save the complete outline to a file using 
 | `references/bilingual-output.md` missing | Proceed with English-only output; warn user |
 | Journal template missing | Refuse with message from Edge Cases |
 | Write tool unavailable | Present final outline in conversation; user saves manually |
+| Semantic Scholar MCP unavailable | Skip Step 2.5 entirely; add [CITATION NEEDED] after each H2 description; warn user; proceed to H3 generation |
 
 ## Examples
 
