@@ -123,17 +123,17 @@ Plans:
 - [ ] 16-01-PLAN.md — Create body-generation-rules.md reference file and add Step 5 body generation to repo-to-paper-skill
 
 ### Phase 17: Existing Skills Bilingual Update
-**Goal**: 7 existing Skills support bilingual paragraph-by-paragraph comparison output as an opt-in mode
+**Goal**: 7 existing Skills support bilingual paragraph-by-paragraph comparison output as default ON, with opt-out keyword detection
 **Depends on**: Phase 13 (bilingual pattern specification must be finalized and validated)
 **Requirements**: BILN-04
 **Success Criteria** (what must be TRUE):
-  1. translation-skill, polish-skill, de-ai-skill, reviewer-skill, abstract-skill, experiment-skill, and logic-skill each support an opt-in bilingual output mode
+  1. translation-skill, polish-skill, de-ai-skill, reviewer-simulation-skill, abstract-skill, experiment-skill, and logic-skill each support bilingual output (default ON)
   2. All 7 updated Skills use the format variants from `references/bilingual-output.md` (LaTeX comment for .tex, markdown blockquote for .md)
-  3. Bilingual mode is off by default; existing behavior is unchanged when bilingual is not requested
-**Plans**: TBD
+  3. Opt-out keywords (`english only`, `no bilingual`, `only english`, `不要中文`) suppress all Chinese output
+**Plans**: 1 plan
 
 Plans:
-- [ ] 17-01: TBD
+- [ ] 17-01-PLAN.md — Add bilingual output mode, opt-out detection, and bilingual-output.md reference to all 7 Skills
 
 ### Phase 18: Workflow Memory
 **Goal**: Skills learn from user behavior and surface relevant workflow recommendations on future invocations
@@ -171,5 +171,5 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16 -> 17 -> 18
 | 14. Repo-to-Paper Core Structure | 1/1 | Complete    | 2026-03-18 | - |
 | 15. Literature Integration | 1/1 | Complete    | 2026-03-18 | - |
 | 16. Body Generation & Bilingual Output | 1/1 | Complete    | 2026-03-18 | - |
-| 17. Existing Skills Bilingual Update | v2.0 | 0/TBD | Not started | - |
+| 17. Existing Skills Bilingual Update | v2.0 | 0/1 | Not started | - |
 | 18. Workflow Memory | v2.0 | 0/TBD | Not started | - |
