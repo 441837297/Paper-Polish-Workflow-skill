@@ -143,10 +143,11 @@ Plans:
   1. Skill execution records the user's workflow sequence (which Skills invoked in what order) to a project-level config file
   2. On next invocation, if a recognized workflow pattern is detected, the Skill offers a recommendation (e.g., "You usually run de-ai after polishing -- proceed?")
   3. User can dismiss or accept workflow recommendations without disrupting normal Skill operation
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 18-01: TBD
+- [ ] 18-01-PLAN.md — Create infrastructure: config.json workflow_memory key, empty workflow-memory.json, conventions and skeleton updates
+- [ ] 18-02-PLAN.md — Add Step 0 pattern check and record-write step to all 12 Skills
 
 ## Progress
 
@@ -172,4 +173,4 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16 -> 17 -> 18
 | 15. Literature Integration | 1/1 | Complete    | 2026-03-18 | - |
 | 16. Body Generation & Bilingual Output | 1/1 | Complete    | 2026-03-18 | - |
 | 17. Existing Skills Bilingual Update | 1/1 | Complete    | 2026-03-18 | - |
-| 18. Workflow Memory | v2.0 | 0/TBD | Not started | - |
+| 18. Workflow Memory | v2.0 | 0/2 | Not started | - |
