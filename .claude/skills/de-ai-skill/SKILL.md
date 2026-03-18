@@ -22,6 +22,7 @@ references:
   required:
     - references/anti-ai-patterns.md
     - references/expression-patterns.md
+    - references/bilingual-output.md
   leaf_hints:
     - references/anti-ai-patterns/vocabulary.md
     - references/anti-ai-patterns/sentence-patterns.md
@@ -37,6 +38,7 @@ output_contract:
   - detection_report
   - rewritten_text
   - rewrite_report
+  - bilingual_conversation
 ---
 
 ## Purpose
@@ -118,6 +120,7 @@ This Skill detects AI-generated patterns in English academic text and rewrites f
 - Load all three anti-AI pattern leaves (vocabulary, sentence-patterns, transitions-and-tone).
 - If target journal specified, load journal template; if missing, refuse.
 - Read user input (file via Read tool, or pasted text from conversation).
+- **Opt-out check:** Scan the user's trigger prompt for any of these phrases (case-insensitive, exact phrase match): `english only`, `no bilingual`, `only english`, `不要中文`. Store result as `bilingual_mode` (true/false). This flag governs Phase 2 bilingual output below.
 
 **Step 2 -- Scan:**
 - Scan full text against all three pattern dimensions in a single pass.
@@ -165,7 +168,18 @@ This Skill detects AI-generated patterns in English academic text and rewrites f
 | Skipped items | Optional below threshold, domain terms protected |
 | Word count delta | +/- N words |
 
-**Step 4 -- Summary:**
+**Step 4 -- Bilingual Display:**
+- If `bilingual_mode` is true and input was a file: for each paragraph that was rewritten in Step 1, display a `> **[Chinese]** ...` blockquote in conversation showing the Chinese translation of the rewritten English text.
+- Use a section header in conversation: "**双语对照 / Bilingual Comparison:**" before the first blockquote.
+- Format per paragraph:
+
+  > **[Chinese]** [Chinese translation of the rewritten paragraph]
+
+- Do not insert Chinese into the .tex file. The file remains English-only and submission-ready.
+- If `bilingual_mode` is false (opt-out detected): skip this step entirely.
+- Pasted text input: if `bilingual_mode` is true, append the `> **[Chinese]** ...` blockquote immediately after each rewritten paragraph in the conversation diff output.
+
+**Step 5 -- Summary:**
 - If further polishing is needed, recommend: "Consider running the Polish Skill for additional refinement."
 
 ## LaTeX Annotation Format
@@ -184,6 +198,7 @@ This Skill detects AI-generated patterns in English academic text and rewrites f
 | Rewritten text | In-place LaTeX with annotations (file) or conversation diff (pasted) | Phase 2 |
 | Rewrite report | Structured markdown table | After Phase 2 |
 | Word count delta | Integer | After Phase 2 |
+| `bilingual_conversation` | `> **[Chinese]** ...` blockquotes in session | Phase 2 rewritten paragraphs only. Skipped when opt-out detected. |
 
 ## Edge Cases
 
