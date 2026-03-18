@@ -12,5 +12,12 @@ Thumbs.db
 node_modules/
 *.tgz
 
-# Sisyphus work files
-.sisyphus/drafts/
+# GSD / Planning (internal development state)
+.planning/
+.sisyphus/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Stackdumps
+*.stackdump
