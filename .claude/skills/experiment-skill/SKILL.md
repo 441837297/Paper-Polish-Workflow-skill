@@ -22,6 +22,7 @@ tools:
 references:
   required:
     - references/expression-patterns.md
+    - references/bilingual-output.md
   leaf_hints:
     - references/expression-patterns/results-and-discussion.md
     - references/expression-patterns/conclusions-and-claims.md
@@ -34,6 +35,7 @@ input_modes:
 output_contract:
   - pattern_analysis
   - discussion_paragraphs
+  - bilingual_discussion
 ---
 
 ## Purpose
@@ -118,6 +120,7 @@ then receives Phase 2 discussion paragraphs.
 - Load `references/expression-patterns.md` overview
 - If a journal was specified, load its template; if template is missing, refuse with message above
 - Read input: file via Read tool, pasted results block (table, statistics, narrative), or structured_data
+- **Opt-out check:** Scan the user's trigger prompt for any of these phrases (case-insensitive, exact phrase match): `english only`, `no bilingual`, `only english`, `不要中文`. Store result as `bilingual_mode` (true/false). This flag governs Phase 2 bilingual output below.
 - **Guard — measurable data required:** if input is vague (e.g., "my results show improvement"
   without values, comparisons, or metrics), refuse: "Please provide specific values, comparisons,
   or metrics before I can identify findings."
@@ -165,6 +168,14 @@ then receives Phase 2 discussion paragraphs.
 
 **Step 3 — Output:**
 - Present all discussion paragraphs in sequence
+- **Bilingual display:** If `bilingual_mode` is true: after each discussion paragraph, append a `> **[Chinese]** ...` blockquote containing the Chinese translation of that paragraph. Use a section header "**双语对照 / Bilingual Comparison:**" before the first paragraph. Format per finding paragraph:
+
+  [English discussion paragraph for Finding N]
+
+  > **[Chinese]** [Chinese translation of the discussion paragraph for Finding N]
+
+- Do not insert Chinese into any written file. If the user requested writing discussion to the paper file via Write tool, write English-only paragraphs to the file; the Chinese blockquotes remain in conversation only.
+- If `bilingual_mode` is false (opt-out detected): skip bilingual display entirely.
 - If file input was used, offer to append discussion to file using Write tool
 - Recommend Polish Skill for further expression refinement if higher-register prose is desired
 
@@ -174,6 +185,7 @@ then receives Phase 2 discussion paragraphs.
 |--------|--------|-----------|
 | `pattern_analysis` | Structured Finding list (Finding N: format) | Always — Phase 1 |
 | `discussion_paragraphs` | One paragraph per confirmed finding | Phase 2 only, after Phase 1 confirmation |
+| `bilingual_discussion` | `> **[Chinese]** ...` blockquotes in session (one per finding paragraph) | Phase 2 only. Skipped when opt-out detected. Not written to file. |
 
 **Note:** Phase 2 output cannot be produced without Phase 1 confirmation. If user skips Phase 1
 and requests discussion directly, require Phase 1 completion first.
