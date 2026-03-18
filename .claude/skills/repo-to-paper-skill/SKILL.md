@@ -1,0 +1,286 @@
+---
+name: repo-to-paper-skill
+description: >-
+  Scan an experiment repo and generate a complete paper outline (H1/H2/H3)
+  with user approval checkpoints at each level. Python ML repos.
+  扫描实验仓库，逐级生成论文大纲（H1/H2/H3），每级用户确认后推进。
+triggers:
+  primary_intent: generate paper outline from experiment repo
+  examples:
+    - "Generate a paper outline from my repo"
+    - "帮我从实验仓库生成论文大纲"
+    - "Scan my project and create paper structure"
+    - "把我的代码仓库转成论文框架"
+    - "Create paper sections from experiment code"
+    - "从代码生成论文结构"
+tools:
+  - Read
+  - Write
+  - Structured Interaction
+references:
+  required:
+    - references/repo-patterns.md
+    - references/bilingual-output.md
+  leaf_hints:
+    - references/journals/ceus.md
+input_modes:
+  - repo_path
+output_contract:
+  - scan_summary
+  - paper_outline
+---
+
+## Purpose
+
+This Skill scans a Python ML experiment repository and generates a hierarchical paper outline
+(H1/H2/H3) with user approval checkpoints at each heading level. It serves researchers who
+have completed experiments and need to structure findings into an academic paper. The scan
+categorizes repo files using patterns from `references/repo-patterns.md`, then progressively
+generates headings from coarse (sections) to fine (sub-subsections), with the user confirming
+or modifying each level before proceeding.
+
+## Trigger
+
+**Activates when the user asks to:**
+- Generate a paper structure, outline, or skeleton from a repository or codebase
+- Scan a project and create paper sections from experiment code or results
+- 从实验仓库/代码仓库生成论文大纲或论文结构
+
+**Example invocations:**
+- "Generate a paper outline from my repo"
+- "帮我从实验仓库生成论文大纲"
+- "Scan my project and create paper structure"
+- "把我的代码仓库转成论文框架"
+
+## Modes
+
+| Mode | Default | Behavior |
+|------|---------|----------|
+| `guided` | Yes | Full 4-step workflow with confirmation at each heading level |
+| `direct` | | Not supported -- outline generation inherently requires user validation at each level |
+| `batch` | | Not supported -- each repo requires unique analysis |
+
+**Default mode:** `guided`. The layered confirmation design is central to this Skill.
+
+## References
+
+### Required (always loaded)
+
+| File | Purpose |
+|------|---------|
+| `references/repo-patterns.md` | File categorization patterns and section mapping rules |
+| `references/bilingual-output.md` | Bilingual output format (Skill is bilingual-eligible) |
+
+### Leaf Hints (loaded when needed)
+
+| File | When to Load |
+|------|--------------|
+| `references/journals/ceus.md` | When user specifies CEUS as target journal |
+
+### Loading Rules
+
+- Load required references at Step 1 start.
+- Load journal template at Step 2 if a journal is specified.
+- If journal template file is missing, refuse: "Journal template for [X] not found. Available: CEUS."
+
+## Ask Strategy
+
+**Before starting, ask about:**
+1. **Repo path** (required): "Which repository should I scan?" -- use Structured Interaction if available
+2. **Target journal** (optional): "Which journal is this paper targeting?" -- options: CEUS, Other, None/General.
+   If CEUS, load template at Step 2. If Other, ask for journal name. If None, use IMRaD default
+
+**Bilingual mode:** Inferred from trigger text. Check for opt-out keywords per `references/bilingual-output.md`
+(exact phrases: `english only`, `no bilingual`, `only english`, `不要中文`). Do not ask explicitly.
+
+**Rules:**
+- Never ask more than 2 explicit questions (repo path + journal)
+- In direct mode, skip -- but direct mode is not supported for this Skill
+
+## Workflow
+
+### Step 1: Scan Repository
+
+**Prepare:**
+- Load `references/repo-patterns.md` and `references/bilingual-output.md`
+- Read the repository directory structure (top 2 levels: root + first-level subdirectories)
+- Categorize each file using the File Identification Patterns table from `repo-patterns.md`
+- Apply ambiguity rules for files matching multiple categories (lowest priority number wins)
+- Skip hidden files, test files, and binary data files per the Skip Rules in `repo-patterns.md`
+
+**Present:**
+- Display a categorized summary table:
+
+  | Category | Files Found | Key Items |
+  |---|---|---|
+  | documentation | 3 | README.md, docs/overview.md |
+  | results | 5 | results/metrics.csv, scores.json |
+
+- Mark missing categories: "No [category] files found"
+- Summary line: "Scanned N files in M categories. Proceeding to H1 outline generation..."
+- If user wants to review or correct, they can interrupt; otherwise auto-proceed to Step 2
+
+---
+
+### Step 2: Generate H1 Outline
+
+**Prepare:**
+- If journal specified (e.g., CEUS), load `references/journals/[journal].md` and use its Section
+  Guidance headings as H1 structure. CEUS sections: Abstract, Introduction, Study Area / Data /
+  Methods, Results, Discussion, Conclusion
+- If no journal specified, use IMRaD default: Introduction, Methods, Results and Discussion, Conclusion
+- Adjust base sections based on scan summary (e.g., add "Study Area" if spatial data detected)
+
+**Present:**
+- Display H1 headings with one-sentence descriptions:
+  ```
+  # 1. Introduction
+      Establish research context, literature gap, and contribution statement.
+  # 2. Methods
+      Describe the analytical approach, data sources, and model architecture.
+  ```
+- Bilingual: if bilingual mode is ON, add Chinese translation of each description using
+  Markdown blockquote format: `> **[Chinese]** ...` per `references/bilingual-output.md`
+- Summary line: "Generated N H1 sections. Please confirm, modify, or add before proceeding to H2."
+- Wait for user confirmation ("ok") or modification instructions
+
+**On modification:** Revise H1 headings per user feedback and re-display. Loop until confirmed.
+
+**Section adjustment examples:**
+- If scan found spatial data files (shapefiles, GeoJSON) -> consider adding "Study Area" H1 section
+- If scan found no result files -> mark Results section with warning placeholder
+- If scan found multiple distinct model implementations -> consider splitting Methods into sub-approaches
+
+---
+
+### Step 3: Generate H2 Outline
+
+**Prepare:**
+- For each confirmed H1 section, read relevant repo files to generate H2 sub-headings
+- Use the Category to Paper Section Mapping from `repo-patterns.md` to identify which files
+  inform each H1 section
+- Read actual file contents (README for Introduction, config files for Methods, result files
+  for Results) -- H2 generation requires content reading, not just directory structure
+- Generate 2-4 H2 sub-headings per H1 section, each with a one-sentence description
+
+**Present:**
+- Display full H1 + H2 hierarchy with source annotations on each H2:
+  ```
+  # 1. Introduction
+  ## 1.1 Research Background and Motivation  <- from: README.md
+      Urban heat island measurement requires fine-grained spatial analysis approaches.
+  ## 1.2 Literature Gap and Contribution  <- from: README.md
+      Existing methods lack integration of street-level semantics with thermal data.
+  ```
+- Source annotations: list the 1-3 most directly relevant files (highest-priority per `repo-patterns.md`)
+- Bilingual: if ON, add Chinese descriptions in `> **[Chinese]** ...` blockquote format
+- Same confirmation loop as Step 2: "Generated N H2 subsections across M H1 sections. Please
+  confirm, modify, or add before proceeding to H3."
+
+---
+
+### Step 4: Generate H3 Outline
+
+**Prepare:**
+- For each confirmed H2 subsection, read deeper file contents to generate H3 sub-sub-headings
+- H3 captures specific technical details: individual model components, specific metrics,
+  particular datasets, analysis steps
+- Not every H2 needs H3 -- generate only where repo content supports further breakdown
+  (typically Methods and Results). Generate 0-3 H3 entries per H2 subsection
+
+**Present:**
+- Display full H1 + H2 + H3 hierarchy with source annotations on H3 entries:
+  ```
+  ## 1.1 Research Background and Motivation
+  ### 1.1.1 Urban Heat Island Measurement Challenges  <- from: README.md:L15-30
+      Current approaches to UHI measurement rely on satellite imagery with limited resolution.
+  ```
+- Bilingual: if ON, add Chinese descriptions in `> **[Chinese]** ...` blockquote format
+- Same confirmation loop as Step 2: "Generated N H3 sub-subsections. Please confirm, modify,
+  or add. This completes the outline structure."
+
+## Output Contract
+
+| Output | Format | Condition |
+|--------|--------|-----------|
+| `scan_summary` | Categorized summary table | Always -- Step 1 |
+| `paper_outline` | Hierarchical H1/H2/H3 with descriptions and source annotations | After all steps confirmed |
+
+**Bilingual eligibility:** This Skill produces academic text (one-sentence heading descriptions).
+Bilingual mode is ON by default; opt-out via keywords in `references/bilingual-output.md`.
+
+After final H3 confirmation, offer to save the complete outline to a file using Write tool:
+- Default filename: `paper_outline.md` in the repo root
+- Include all heading levels with descriptions and source annotations
+- Bilingual descriptions included if bilingual mode is ON
+
+## Edge Cases
+
+| Situation | Handling |
+|-----------|----------|
+| Empty repository (no recognized files) | Refuse: "No scannable files found in [path]. Please verify the repository path." |
+| No README.md found | Warn in scan summary; proceed with available files; Introduction H2 will have limited source annotations |
+| No result files found | Warn in scan summary; Results H2/H3 use placeholder: "[RESULTS NEEDED: add result files to populate this section]" |
+| Journal specified but template missing | Refuse: "Journal template for [X] not found. Available: CEUS." |
+| Non-Python repo | Warn: "Scan patterns are calibrated for Python ML projects. Non-Python files may be miscategorized." Proceed with best-effort |
+| Very large repo (>500 files in top 2 levels) | List only top 10 files per category in scan summary; note total count |
+| All files in one category | Proceed -- outline may be unbalanced; user corrects at confirmation step |
+
+## Fallbacks
+
+| Scenario | Fallback |
+|----------|----------|
+| Structured Interaction unavailable | Ask repo path and journal as plain-text questions |
+| `references/repo-patterns.md` missing | Refuse: "Required reference file references/repo-patterns.md not found. Cannot categorize repo files." |
+| `references/bilingual-output.md` missing | Proceed with English-only output; warn user |
+| Journal template missing | Refuse with message from Edge Cases |
+| Write tool unavailable | Present final outline in conversation; user saves manually |
+
+## Examples
+
+**Minimal invocation:** User provides repo path `~/projects/uhi-prediction/` and selects CEUS as target journal.
+
+**Step 1 output (scan summary):**
+```
+| Category      | Files Found | Key Items                               |
+|---------------|-------------|-----------------------------------------|
+| documentation | 2           | README.md, docs/data-sources.md         |
+| config        | 3           | config.yaml, params.json, .env.example  |
+| results       | 4           | results/metrics.csv, results/ablation/  |
+| code          | 8           | src/model.py, src/train.py, src/eval.py |
+| figures       | 3           | figures/heatmap.png, figures/scatter.svg |
+| dependencies  | 1           | requirements.txt                        |
+
+Scanned 21 files in 6 categories. Proceeding to H1 outline generation...
+```
+
+**Step 2 output (H1 with CEUS template):**
+```
+# 1. Introduction
+    Establish the urban heat island prediction problem and contribution.
+    > **[Chinese]** 阐述城市热岛预测问题及本研究贡献。
+# 2. Study Area and Data
+    Describe the geographic scope and data sources for UHI analysis.
+    > **[Chinese]** 描述研究区域范围及城市热岛分析的数据来源。
+# 3. Methods
+    Present the gradient boosting prediction framework and feature engineering.
+    > **[Chinese]** 介绍梯度提升预测框架与特征工程方法。
+# 4. Results
+    Report prediction accuracy and spatial pattern analysis.
+    > **[Chinese]** 报告预测精度与空间格局分析结果。
+# 5. Discussion
+    Interpret findings in the context of urban planning and prior UHI studies.
+    > **[Chinese]** 在城市规划和既有热岛研究背景下解读发现。
+# 6. Conclusion
+    Summarize contributions and identify limitations.
+    > **[Chinese]** 总结贡献并指出局限性。
+
+Generated 6 H1 sections. Please confirm, modify, or add before proceeding to H2.
+```
+
+User confirms. Steps 3-4 follow the same pattern with increasing detail and source annotations.
+
+---
+
+*Skill: repo-to-paper-skill*
+*Conventions: references/skill-conventions.md*
