@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/Claude%20Code-Skills-blue" alt="Claude Code">
-  <img src="https://img.shields.io/npm/v/@lylll9436/paper-polish-workflow-skill?registry_uri=https%3A%2F%2Fnpm.pkg.github.com" alt="npm">
+  <img src="https://img.shields.io/github/v/tag/Lylll9436/Paper-Polish-Workflow-skill?label=version&color=green" alt="version">
 </p>
 
 ---
