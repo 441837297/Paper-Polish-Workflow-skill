@@ -114,6 +114,16 @@ This Skill detects AI-generated patterns in English academic text and rewrites f
 
 ## Workflow
 
+### Step 0: Workflow Memory Check
+
+- Read `.planning/workflow-memory.json`. If file missing or empty, skip to Phase 1.
+- Check if the last 1-2 log entries form a recognized pattern with `de-ai-skill` that has appeared >= threshold times in the log. See `skill-conventions.md > Workflow Memory > Pattern Detection` for the full algorithm.
+- If a pattern is found, present recommendation via AskUserQuestion:
+  - Question: "检测到常用流程：[pattern]（已出现 N 次）。是否直接以 direct 模式运行 de-ai-skill？"
+  - Options: "Yes, proceed" / "No, continue normally"
+- If user accepts: set mode to `direct`, skip Ask Strategy questions.
+- If user declines or AskUserQuestion unavailable: continue in normal mode.
+
 ### Phase 1: Detect
 
 **Step 1 -- Prepare:**
@@ -121,6 +131,7 @@ This Skill detects AI-generated patterns in English academic text and rewrites f
 - If target journal specified, load journal template; if missing, refuse.
 - Read user input (file via Read tool, or pasted text from conversation).
 - **Opt-out check:** Scan the user's trigger prompt for any of these phrases (case-insensitive, exact phrase match): `english only`, `no bilingual`, `only english`, `不要中文`. Store result as `bilingual_mode` (true/false). This flag governs Phase 2 bilingual output below.
+- **Record workflow:** Append `{"skill": "de-ai-skill", "ts": "<ISO timestamp>"}` to `.planning/workflow-memory.json`. Create file as `[]` if missing. Drop oldest entry if log length >= 50.
 
 **Step 2 -- Scan:**
 - Scan full text against all three pattern dimensions in a single pass.

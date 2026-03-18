@@ -114,6 +114,16 @@ then receives Phase 2 discussion paragraphs.
 
 ## Workflow
 
+### Step 0: Workflow Memory Check
+
+- Read `.planning/workflow-memory.json`. If file missing or empty, skip to Phase 1.
+- Check if the last 1-2 log entries form a recognized pattern with `experiment-skill` that has appeared >= threshold times in the log. See `skill-conventions.md > Workflow Memory > Pattern Detection` for the full algorithm.
+- If a pattern is found, present recommendation via AskUserQuestion:
+  - Question: "检测到常用流程：[pattern]（已出现 N 次）。是否直接以 direct 模式运行 experiment-skill？"
+  - Options: "Yes, proceed" / "No, continue normally"
+- If user accepts: set mode to `direct`, skip Ask Strategy questions.
+- If user declines or AskUserQuestion unavailable: continue in normal mode.
+
 ### Phase 1: Analyze Results
 
 **Step 1 — Prepare:**
@@ -125,6 +135,7 @@ then receives Phase 2 discussion paragraphs.
   without values, comparisons, or metrics), refuse: "Please provide specific values, comparisons,
   or metrics before I can identify findings."
 - LaTeX table input: read data values and captions; ignore typesetting commands
+- **Record workflow:** Append `{"skill": "experiment-skill", "ts": "<ISO timestamp>"}` to `.planning/workflow-memory.json`. Create file as `[]` if missing. Drop oldest entry if log length >= 50.
 
 **Step 2 — Extract Findings:**
 - Identify measurable comparisons: method A vs. method B, magnitude, direction

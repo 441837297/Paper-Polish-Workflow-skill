@@ -107,6 +107,17 @@ None. All reference files are in `required` because Step 5 body generation alway
 
 ## Workflow
 
+### Step 0: Workflow Memory Check
+
+- Read `.planning/workflow-memory.json`. If file missing or empty, skip to Step 1.
+- Check if the last 1-2 log entries form a recognized pattern with `repo-to-paper-skill` that has appeared >= threshold times in the log. See `skill-conventions.md > Workflow Memory > Pattern Detection` for the full algorithm.
+- If a pattern is found, present recommendation via AskUserQuestion:
+  - Question: "检测到常用流程：[pattern]（已出现 N 次）。是否直接以 direct 模式运行 repo-to-paper-skill？"
+  - Options: "Yes, proceed" / "No, continue normally"
+- If user accepts: set mode to `direct`, skip Ask Strategy questions.
+- If user declines or AskUserQuestion unavailable: continue in normal mode.
+- **Note:** This Skill does not support full `direct` mode. If user accepts the recommendation, skip the Ask Strategy questions (repo path, journal) using inferred context, but retain all guided Step checkpoints (Steps 2-5 confirmations). The output contract is not altered.
+
 ### Step 1: Scan Repository
 
 **Prepare:**
@@ -127,6 +138,7 @@ None. All reference files are in `required` because Step 5 body generation alway
 - Mark missing categories: "No [category] files found"
 - Summary line: "Scanned N files in M categories. Proceeding to H1 outline generation..."
 - If user wants to review or correct, they can interrupt; otherwise auto-proceed to Step 2
+- **Record workflow:** Append `{"skill": "repo-to-paper-skill", "ts": "<ISO timestamp>"}` to `.planning/workflow-memory.json`. Create file as `[]` if missing. Drop oldest entry if log length >= 50.
 
 ---
 
