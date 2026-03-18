@@ -21,6 +21,7 @@ tools:
 references:
   required:
     - references/expression-patterns.md
+    - references/bilingual-output.md
   leaf_hints:
     - references/expression-patterns/introduction-and-gap.md
     - references/expression-patterns/methods-and-data.md
@@ -38,6 +39,7 @@ output_contract:
   - polished_text
   - change_annotations
   - summary_report
+  - bilingual_conversation
 ---
 
 ## Purpose
@@ -118,6 +120,7 @@ This Skill polishes English academic text for journal submission through two mod
 - Determine input type: file path (use Edit tool) or pasted text (output in conversation).
 - Load references: expression pattern leaf by section type, all anti-AI pattern leaves, journal template if specified.
 - Detect input characteristics: translationese presence, section type, text length for smart adaptation.
+- **Opt-out check:** Scan the user's trigger prompt for any of these phrases (case-insensitive, exact phrase match): `english only`, `no bilingual`, `only english`, `不要中文`. Store result as `bilingual_mode` (true/false). This flag governs Step 5 bilingual output below.
 
 **Step 2 -- Polish:**
 - Single intelligent pass covering expression, logic, and structure as needed based on text quality.
@@ -136,6 +139,17 @@ This Skill polishes English academic text for journal submission through two mod
 - Generate concise report: change count, modification types (expression/logic/structure), notes.
 - Include "Recommend running De-AI Skill for further detection check" when substantial rewrites were made.
 
+**Step 5 -- Bilingual Display (file input only):**
+- If `bilingual_mode` is true and input was a file: for each paragraph that was modified in Step 2, display a `> **[Chinese]** ...` blockquote in conversation showing the Chinese translation of the polished English text.
+- Use a section header in conversation: "**双语对照 / Bilingual Comparison:**" before the first blockquote.
+- Format per paragraph:
+
+  > **[Chinese]** [Chinese translation of the polished paragraph]
+
+- Do not insert Chinese into the .tex file. The file remains English-only and submission-ready.
+- If `bilingual_mode` is false (opt-out detected): skip this step entirely.
+- Pasted text input: if `bilingual_mode` is true, append the `> **[Chinese]** ...` blockquote immediately after each polished paragraph in the conversation output.
+
 ### Guided Mode
 
 **Step 1 -- Collect Context:** Same as Quick-fix Step 1, plus confirm scope with user.
@@ -149,6 +163,8 @@ This Skill polishes English academic text for journal submission through two mod
 | 4. Expression | Word choice, sentence clarity, tone, conciseness | Anti-AI patterns, translationese, academic register, hedging calibration |
 
 **Step 5 -- Summary:** Same as Quick-fix Step 4.
+
+**Step 6 -- Bilingual Display:** Same as Quick-fix Step 5. If `bilingual_mode` is true, display `> **[Chinese]** ...` blockquotes in conversation for each modified paragraph. If false, skip entirely.
 
 ## LaTeX Annotation Format
 
@@ -165,6 +181,7 @@ This Skill polishes English academic text for journal submission through two mod
 | `polished_text` | In-place edits (file) or conversation output (pasted text) | Always produced |
 | `change_annotations` | LaTeX comments (`% [Polish] Original:`) | File input only |
 | `summary_report` | Markdown in session (not in file) | Always produced |
+| `bilingual_conversation` | `> **[Chinese]** ...` blockquotes in session | File input: modified paragraphs only. Pasted text: after each output paragraph. Skipped when opt-out detected. |
 
 ## Edge Cases
 
