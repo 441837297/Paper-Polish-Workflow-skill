@@ -25,9 +25,25 @@ Every Skill must produce output that is directly usable in a real paper submissi
 - ✓ Integrated literature search at H2 stage via Semantic Scholar — v2.0
 - ✓ Workflow Memory system: Skills record invocations and detect frequent patterns — v2.0
 
+## Current Milestone: v2.1 Team Agents Orchestration
+
+**Goal:** Add a universal team agents orchestration layer that parallelizes any Skill (or Skill chain) across paper sections, with observable progress and automatic consistency review.
+
+**Target features:**
+- Universal orchestrator Skill (`ppw:team`) for parallel section-level processing
+- Single-Skill parallel mode: split paper by H1/H2 sections, run same Skill on each section concurrently
+- Multi-Skill pipeline mode: chain Skills (e.g., translate→polish→de-ai), flowing sections through stages
+- Observable collaboration: real-time agent progress display with intervention points between stages
+- Automatic consistency review: post-merge check for terminology/style/tone inconsistencies across sections
+
 ### Active
 
-(None — plan next milestone)
+- [ ] Universal orchestrator Skill for parallel section-level processing
+- [ ] Section splitter that parses paper into H1/H2 sections for parallel dispatch
+- [ ] Single-Skill parallel mode with agent-per-section execution
+- [ ] Multi-Skill pipeline mode with stage-based flow
+- [ ] Observable progress display with intervention points
+- [ ] Automatic consistency review after parallel merge
 
 ### Out of Scope
 
@@ -88,4 +104,4 @@ Every Skill must produce output that is directly usable in a real paper submissi
 | Top-down repo-to-paper structure (H1→H2→H3→body) | Matches how humans outline papers; user confirms at each level before detail generation | ✓ Good — prevents wasted generation on wrong structure |
 
 ---
-*Last updated: 2026-03-18 after v2.0 milestone shipped*
+*Last updated: 2026-03-19 after v2.1 milestone started*

@@ -65,4 +65,3 @@ All leaf modules should keep these headings so future Skills can target them pre
 
 *Entry point: references/expression-patterns.md*
 *Updated for modular loading: 2026-03-11*
-

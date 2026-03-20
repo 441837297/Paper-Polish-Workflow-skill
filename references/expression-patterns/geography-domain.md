@@ -48,4 +48,3 @@
 ---
 
 *Module: geography-domain*
-
