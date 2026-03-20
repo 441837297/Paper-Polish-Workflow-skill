@@ -5,7 +5,7 @@
 <h1 align="center">Paper Polish Workflow</h1>
 
 <p align="center">
-  <strong>13 项学术论文写作、润色与投稿技能套件 —— 基于 Claude Code 驱动。</strong>
+  <strong>14 项学术论文写作、润色与投稿技能套件 —— 基于 Claude Code 驱动。</strong>
 </p>
 
 <p align="center">
@@ -94,6 +94,12 @@ cp -r node_modules/@lylll9436/paper-polish-workflow-skill/references/ references
 | `/ppw:literature` | `帮我找关于城市热岛的文献` | 通过 Semantic Scholar MCP 检索学术文献并生成经过验证的 BibTeX 引用。需要 Semantic Scholar MCP。 |
 | `/ppw:visualization` | `帮我选择合适的可视化方式` | 为实验数据推荐合适的图表类型，提供理由和工具提示，地理感知：空间数据时推荐分级地图、空间散点图等。 |
 
+### 团队协作
+
+| 技能 | 触发示例 | 功能描述 |
+|------|---------|---------|
+| `/ppw:team` | `ppw:team polish paper.tex` | 团队协作模式：将论文拆分为章节，通过子代理并行运行任意适用技能（polish、translation、de-ai）。支持 LaTeX `\section{}` 和 Markdown `# H1` 拆分，包含概念验证质量门控。 |
+
 ### 维护工具
 
 | 技能 | 触发示例 | 功能描述 |
@@ -126,7 +132,16 @@ cp -r node_modules/@lylll9436/paper-polish-workflow-skill/references/ references
 1. `/ppw:caption` — 生成或改进图表标题，地图类图表支持地理元数据。
 2. `/ppw:visualization` — 为实验数据推荐图表类型，附工具提示。
 
-### 场景四：文献搜索流程
+### 场景四：团队协作模式
+
+对长论文进行章节级并行处理，适合全文润色、翻译或去 AI 痕迹：
+
+1. `/ppw:team polish paper.tex` — 自动拆分论文为章节，选择目标章节，通过子代理对单个章节运行 PoC 验证。
+2. 确认子代理输出质量后，后续版本将支持全章节并行派发。
+
+支持的子技能：`polish`、`translation`、`de-ai`。支持 `.tex` 和 `.md` 格式。
+
+### 场景五：文献搜索流程
 
 1. `/ppw:literature` — 通过 Semantic Scholar MCP 检索文献并生成经验证的 BibTeX 引用。
 2. `/ppw:abstract` — 使用五句话 Farquhar 公式生成或改写摘要。
@@ -230,6 +245,12 @@ All skills use the `ppw:` namespace prefix. Invoke with `/ppw:skill-name`.
 | `/ppw:literature` | `Find papers about urban heat island` | Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries. Requires Semantic Scholar MCP. |
 | `/ppw:visualization` | `What chart should I use for this data?` | Recommend appropriate chart types for experimental data with rationale and tool hints. Geography-aware: choropleth, spatial scatter, kernel density when spatial data detected. |
 
+### Team Orchestration
+
+| Skill | Trigger Examples | Description |
+|-------|-----------------|-------------|
+| `/ppw:team` | `ppw:team polish paper.tex` | Team mode: split a paper into sections and run any eligible Skill (polish, translation, de-ai) across sections via subagents. Supports LaTeX `\section{}` and Markdown `# H1` splitting with proof-of-concept quality gate. |
+
 ### Maintenance
 
 | Skill | Trigger Examples | Description |
@@ -262,7 +283,16 @@ Use these Skills together when preparing figures and tables:
 1. `/ppw:caption` — Generate or improve a figure or table caption, with geography-aware metadata for maps.
 2. `/ppw:visualization` — Get chart type recommendations for your experimental data, with tool hints.
 
-### Scenario 4: Literature Search Chain
+### Scenario 4: Team Mode
+
+Process long papers section-by-section in parallel — ideal for full-paper polish, translation, or de-AI:
+
+1. `/ppw:team polish paper.tex` — Auto-split the paper into sections, select targets, and run a PoC validation on one section via a subagent.
+2. After confirming subagent output quality, future versions will support full parallel dispatch across all sections.
+
+Eligible sub-skills: `polish`, `translation`, `de-ai`. Supports `.tex` and `.md` formats.
+
+### Scenario 5: Literature Search Chain
 
 1. `/ppw:literature` — Search academic literature via Semantic Scholar MCP and generate verified BibTeX entries.
 2. `/ppw:abstract` — Generate or restructure your abstract using the 5-sentence Farquhar formula.
