@@ -136,7 +136,7 @@ cp -r node_modules/@lylll9436/paper-polish-workflow-skill/references/ references
 
 对长论文进行章节级并行处理，适合全文润色、翻译或去 AI 痕迹：
 
-1. `/ppw:team polish paper.tex` — 自动拆分论文为章节，选择目标章节，通过子代理对单个章节运行 PoC 验证。
+1. `/ppw:team polish paper.tex` — 自动拆分论文为章节，选择目标章节，通过子代理对单个章节运行概念验证（PoC，Proof of Concept：先用一个子代理处理一个章节，确认输出质量与主会话一致后再扩展到全部章节）。
 2. 确认子代理输出质量后，后续版本将支持全章节并行派发。
 
 支持的子技能：`polish`、`translation`、`de-ai`。支持 `.tex` 和 `.md` 格式。
@@ -287,7 +287,7 @@ Use these Skills together when preparing figures and tables:
 
 Process long papers section-by-section in parallel — ideal for full-paper polish, translation, or de-AI:
 
-1. `/ppw:team polish paper.tex` — Auto-split the paper into sections, select targets, and run a PoC validation on one section via a subagent.
+1. `/ppw:team polish paper.tex` — Auto-split the paper into sections, select targets, and run a PoC (Proof of Concept) validation — a single subagent processes one section first to verify output quality matches main-session execution before scaling to all sections.
 2. After confirming subagent output quality, future versions will support full parallel dispatch across all sections.
 
 Eligible sub-skills: `polish`, `translation`, `de-ai`. Supports `.tex` and `.md` formats.
