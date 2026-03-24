@@ -6,10 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - `/get-paper` — Search Google Scholar via Chrome DevTools MCP, interactively select papers, and retrieve BibTeX entries. Complements `ppw:literature` (Semantic Scholar) with a Google Scholar alternative.
+- Claude Code plugin format: `.claude-plugin/plugin.json` manifest + `skills/` at package root
+- Plugin mode installation via `--plugin-dir` (no manual file copying needed)
 
 ### Changed
 - Skill count 14 → 15
-- README updated with get-paper in support tools section (Chinese + English)
+- Package registry migrated from GitHub Packages to npmjs.com (public, no auth required)
+- Package `files` field updated: `skills/` replaces `.claude/skills/`, added `.claude-plugin/`
+- README installation instructions rewritten for npm + plugin mode (Chinese + English)
 
 ## [2.1.0] - 2026-03-20
 

@@ -20,14 +20,18 @@
   "bugs": {
     "url": "https://github.com/Lylll9436/Paper-Polish-Workflow-skill/issues"
   },
+  "scripts": {
+    "postinstall": "node postinstall.js"
+  },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
+    "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "files": [
-    "paper-polish-workflow/",
-    ".claude/skills/",
+    ".claude-plugin/",
+    "skills/",
     "references/",
+    "postinstall.js",
     "examples/",
     "CHANGELOG.md",
     "CONTRIBUTING.md",
