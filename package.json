@@ -1,10 +1,11 @@
 {
   "name": "@lylll9436/paper-polish-workflow-skill",
-  "version": "2.2.0",
-  "description": "A 15-Skill suite for academic paper writing, repo-to-paper generation, and submission — powered by Claude Code.",
+  "version": "2.3.0",
+  "description": "A 16-Skill Claude Code plugin for academic paper writing, polishing, and submission.",
   "keywords": [
     "claude-code",
     "claude-code-skills",
+    "claude-code-plugin",
     "academic-writing",
     "paper-polishing",
     "latex",
@@ -20,9 +21,6 @@
   "bugs": {
     "url": "https://github.com/Lylll9436/Paper-Polish-Workflow-skill/issues"
   },
-  "scripts": {
-    "postinstall": "node postinstall.js"
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
@@ -31,7 +29,6 @@
     ".claude-plugin/",
     "skills/",
     "references/",
-    "postinstall.js",
     "examples/",
     "CHANGELOG.md",
     "CONTRIBUTING.md",

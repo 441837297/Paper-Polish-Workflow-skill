@@ -5,7 +5,7 @@
 <h1 align="center">Paper Polish Workflow</h1>
 
 <p align="center">
-  <strong>15 项学术论文写作、润色与投稿技能套件 —— 基于 Claude Code 驱动。</strong>
+  <strong>16 项学术论文写作、润色与投稿技能套件 —— Claude Code Plugin。</strong>
 </p>
 
 <p align="center">
@@ -24,26 +24,35 @@
 
 ## 安装说明
 
-```bash
-npm install @lylll9436/paper-polish-workflow-skill
+在 Claude Code 会话中执行以下两步：
+
+```
+/plugin marketplace add Lylll9436/Paper-Polish-Workflow-skill
+/plugin install paper-polish-workflow@paper-polish-workflow
 ```
 
-安装完成后自动执行：
-- 15 个 Skills 复制到 `~/.claude/skills/`（用户级，所有项目可用）
-- References 复制到当前项目的 `references/`
+安装后 16 个 Skills 立即可用，无需手动复制文件。
 
-无需手动复制文件，安装即用。
+### MCP 服务器配置（可选）
 
-### Semantic Scholar MCP 配置（适用于 ppw:literature）
+部分技能依赖外部 MCP 服务器，按需配置：
 
-`ppw:literature` 需要 Semantic Scholar MCP 服务器来检索学术文献。配置步骤如下：
+#### Semantic Scholar MCP（适用于 `/ppw:literature`）
 
-1. 打开 Claude Code 设置。
-2. 进入 **MCP Servers**（MCP 服务器）。
-3. 添加 Semantic Scholar MCP 服务器（服务器键名：`semanticscholar`）。
+通过 Semantic Scholar API 检索学术文献。配置步骤：
+
+1. 打开 Claude Code 设置 → **MCP Servers**。
+2. 添加 Semantic Scholar MCP 服务器（服务器键名：`semanticscholar`）。
+3. 重启 Claude Code。
+
+#### Chrome DevTools MCP（适用于 `/get-paper`）
+
+通过浏览器自动化在 Google Scholar 搜索论文。配置步骤：
+
+1. 安装 Chrome DevTools MCP 服务器（参考 [chrome-devtools-mcp](https://github.com/anthropics/claude-code-chrome-devtools-mcp)）。
+2. 打开 Claude Code 设置 → **MCP Servers**，添加 Chrome DevTools MCP。
+3. 启动 Chrome 浏览器，开启远程调试端口。
 4. 重启 Claude Code。
-
-配置完成后，即可在 Claude Code 会话中直接触发文献检索。
 
 ---
 
@@ -160,26 +169,35 @@ npm install @lylll9436/paper-polish-workflow-skill
 
 ## Installation
 
-```bash
-npm install @lylll9436/paper-polish-workflow-skill
+Run these two commands in a Claude Code session:
+
+```
+/plugin marketplace add Lylll9436/Paper-Polish-Workflow-skill
+/plugin install paper-polish-workflow@paper-polish-workflow
 ```
 
-After installation, the postinstall script automatically:
-- Copies 15 Skills to `~/.claude/skills/` (user-level, available across all projects)
-- Copies References to `references/` in the current project
+All 16 Skills are available immediately after installation — no manual file copying needed.
 
-No manual file copying needed — install and use.
+### MCP Server Setup (Optional)
 
-### Semantic Scholar MCP Setup (for ppw:literature)
+Some skills require external MCP servers. Configure as needed:
 
-`ppw:literature` requires the Semantic Scholar MCP server to search academic literature. To enable it:
+#### Semantic Scholar MCP (for `/ppw:literature`)
 
-1. Open Claude Code settings.
-2. Navigate to **MCP Servers**.
-3. Add the Semantic Scholar MCP server (server key: `semanticscholar`).
+Searches academic literature via Semantic Scholar API.
+
+1. Open Claude Code settings → **MCP Servers**.
+2. Add the Semantic Scholar MCP server (server key: `semanticscholar`).
+3. Restart Claude Code.
+
+#### Chrome DevTools MCP (for `/get-paper`)
+
+Automates Google Scholar search via browser automation.
+
+1. Install Chrome DevTools MCP server (see [chrome-devtools-mcp](https://github.com/anthropics/claude-code-chrome-devtools-mcp)).
+2. Open Claude Code settings → **MCP Servers**, add Chrome DevTools MCP.
+3. Launch Chrome with remote debugging enabled.
 4. Restart Claude Code.
-
-Once set up, you can trigger literature searches directly from your Claude Code session.
 
 ---
 

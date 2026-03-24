@@ -1,0 +1,17 @@
+{
+  "name": "paper-polish-workflow",
+  "owner": {
+    "name": "Lylll9436"
+  },
+  "plugins": [
+    {
+      "name": "paper-polish-workflow",
+      "source": {
+        "source": "npm",
+        "package": "@lylll9436/paper-polish-workflow-skill",
+        "version": "^2.2.0"
+      },
+      "description": "15-Skill suite for academic paper writing, polishing, and submission — powered by Claude Code."
+    }
+  ]
+}
