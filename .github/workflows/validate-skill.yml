@@ -15,7 +15,7 @@ jobs:
       - name: Validate SKILL.md format
         run: |
           set -e
-          SKILL_FILE="paper-polish-workflow/SKILL.md"
+          SKILL_FILE="skills/paper-polish-workflow/SKILL.md"
           
           echo "Validating $SKILL_FILE..."
           
