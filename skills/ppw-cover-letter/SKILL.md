@@ -7,10 +7,10 @@ description: >-
 triggers:
   primary_intent: generate submission cover letter for academic paper
   examples:
-    - "Write a cover letter for my CEUS submission"
+    - "Write a cover letter for my JPO submission"
     - "帮我写投稿信"
     - "Generate a cover letter for my paper"
-    - "写一封投稿到CEUS的cover letter"
+    - "写一封投稿到JPO的cover letter"
     - "Help me draft a submission cover letter"
     - "帮我生成这篇论文的投稿信"
 tools:
@@ -19,7 +19,7 @@ tools:
   - Structured Interaction
 references:
   required:
-    - references/journals/ceus.md
+    - references/journals/jpo.md
   leaf_hints: []
 input_modes:
   - file
@@ -39,10 +39,10 @@ This Skill generates complete, submission-ready academic cover letters by loadin
 - 写投稿信、生成cover letter、帮我写投稿信
 
 **Example invocations:**
-- "Write a cover letter for my CEUS submission"
+- "Write a cover letter for my JPO submission"
 - "帮我写投稿信"
 - "Generate a cover letter for my paper"
-- "写一封投稿到CEUS的cover letter"
+- "写一封投稿到JPO的cover letter"
 - "Help me draft a submission cover letter"
 - "帮我生成这篇论文的投稿信"
 
@@ -65,12 +65,12 @@ None.
 
 | File | When to Load |
 |------|--------------|
-| `references/journals/ceus.md` | When user targets CEUS; provides Aims & Scope, scope keywords for contribution alignment |
+| `references/journals/jpo.md` | When user targets JPO; provides Aims When user targets JPO; provides Aims & Scope, scope keywords for contribution alignment Scope, scope keywords for contribution alignment |
 
 ### Loading Rules
 
 - When journal is specified, load `references/journals/[journal].md`.
-- If template not found: **refuse immediately** with: "Journal template for [X] not found. Available: CEUS."
+- If template not found: **refuse immediately** with: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - Do NOT proceed with generic framing if template is missing.
 - Extract the Aims & Scope section from the loaded template — the contribution statement must reference it directly.
 
@@ -103,7 +103,7 @@ The Skill needs four inputs. If already provided in trigger or paper content, sk
 ### Step 1: Collect Context
 
 - Run Ask Strategy for any missing inputs (journal, paper, author details, data availability).
-- Load `references/journals/[journal].md`. If not found: **refuse** with "Journal template for [X] not found. Available: CEUS." Do NOT proceed.
+- Load `references/journals/[journal].md`. If not found: **refuse** with "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC." Do NOT proceed.
 - If paper provided as file: use Read tool to load it; extract title and key contribution.
 - If paper provided as pasted text: extract title and key contribution from the pasted content.
 - Extract Aims & Scope section from the loaded journal template (contribution statement references this directly).
@@ -178,7 +178,7 @@ Note: Contribution statement must reference journal scope explicitly — not gen
 
 | Situation | Handling |
 |-----------|----------|
-| Journal template not found | Refuse: "Journal template for [X] not found. Available: CEUS." Do not generate with generic framing. |
+| Journal template not found | Refuse: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC." Do not generate with generic framing. |
 | Paper file not found or unreadable | Ask user to paste paper text or abstract instead |
 | Correspondence details not provided; user declines | Use `[Corresponding Author Name]`, `[Email]`, `[Institution]` placeholders; note user must fill before submission |
 | Data availability unknown | Use "Data availability will be confirmed at revision stage." |
@@ -192,13 +192,13 @@ Note: Contribution statement must reference journal scope explicitly — not gen
 | Structured Interaction unavailable | Ask journal name and author details as sequential plain-text questions |
 | Read tool fails on paper file | Ask user to paste abstract or key contribution sentences |
 | Write tool fails | Display complete letter in conversation; advise user to copy to a `.md` file |
-| `references/journals/ceus.md` missing | Refuse with journal-missing message; do not generate without template |
+| `references/journals/jpo.md` missing | Refuse with journal-missing message; do not generate without template |
 
 ## Examples
 
-**Invocation:** "Write a cover letter for my CEUS submission" (with file `my_paper.tex`)
+**Invocation:** "Write a cover letter for my JPO submission" (with file `my_paper.tex`)
 
-1. Skill loads `references/journals/ceus.md` — extracts Aims & Scope.
+1. Skill loads `references/journals/jpo.md` — extracts Aims & Scope.
 2. Skill reads `my_paper.tex` — extracts title and key contribution.
 3. Skill asks: "Please provide your name, email, and institution for the correspondence block."
 4. Skill asks: "Are your data or code publicly available? If yes, please share the repository URL(s)."
@@ -211,17 +211,13 @@ March 2026
 
 The Editor-in-Chief
 [Editor Name]
-Computers, Environment and Urban Systems
+Journal of Physical Oceanography
 
 Dear [Editor Name],
 
-We submit our manuscript entitled "Spatiotemporal Analysis of Urban Heat Islands Using Remote
-Sensing" for consideration in Computers, Environment and Urban Systems.
+We submit our manuscript entitled "Mesoscale Eddy Variability in the South China Sea from Satellite Altimetry" for consideration in Journal of Physical Oceanography.
 
-**Contribution Statement**
-This paper addresses urban heat island detection and mitigation across metropolitan areas, which
-aligns directly with CEUS's focus on computational approaches to understanding urban systems and
-the built environment.
+**Contribution Statement** This paper addresses mesoscale eddy variability and dynamics across ocean basins, which aligns directly with JPO's focus on physical understanding of ocean processes and their role in the climate system.
 ```
 
 ---

@@ -12,7 +12,7 @@ triggers:
     - "审稿这篇论文"
     - "Give me a peer review of my draft"
     - "模拟评审我的论文"
-    - "Simulate a reviewer for my CEUS submission"
+    - "Simulate a reviewer for my JPO submission"
     - "帮我做一个模拟审稿"
 tools:
   - Read
@@ -27,7 +27,7 @@ references:
     - references/expression-patterns/methods-and-data.md
     - references/expression-patterns/results-and-discussion.md
     - references/expression-patterns/conclusions-and-claims.md
-    - references/expression-patterns/geography-domain.md
+    - references/expression-patterns/ocean-science-domain.md
 input_modes:
   - file
   - pasted_text
@@ -45,7 +45,7 @@ This Skill simulates peer review of academic papers, producing a structured bili
 
 ````markdown
 # Role
-你是一位以严苛、精准著称的资深学术审稿人，熟悉计算机科学领域顶级会议的评审标准。你的职责是作为守门员，确保只有在理论创新、实验严谨性和逻辑自洽性上均达到最高标准的研究才能被接收。
+你是一位以严苛、精准著称的资深学术审稿人，熟悉海洋科学领域顶级期刊（如 JPO, JGR, GRL, Nature Communications, Nature Climate Change）的评审标准。你的职责是作为守门员，确保只有在科学创新、方法严谨性和物理机制解释上均达到最高标准的研究才能被接收。
 
 # Task
 请深入阅读并分析我上传的【PDF论文文件】。基于我指定的【投稿目标】，撰写一份严厉但具有建设性的审稿报告。
@@ -56,9 +56,10 @@ This Skill simulates peer review of academic papers, producing a structured bili
    - 拒绝客套：省略所有无关痛痒的赞美，直接切入核心缺陷。你的目标是帮作者发现可能导致拒稿的致命伤，而不是让作者开心。
 
 2. 审查维度：
-   - 原创性：该工作是实质性的突破还是边际增量？如果是后者，直接指出。
-   - 严谨性：数学推导是否有跳跃？实验对比是否公平（Baseline 是否齐全）？消融实验是否充分支撑了核心主张？
-   - 一致性：引言中声称的贡献在实验部分是否真的得到了验证？
+   - 原创性：该工作是实质性的突破还是边际扩展？如果是后者，直接指出。
+   - 数据与方法严谨性：数据源是否恰当？质量控制是否充分？统计分析方法是否合理？误差估计是否可靠？
+   - 物理机制：对结果的物理解释是否充分？是否仅停留在现象描述？结论是否超出了数据的支撑范围？
+   - 一致性：引言中的贡献在实验/分析中是否得到了验证？
 
 3. 格式要求：
    - 严禁列表化滥用：在陈述复杂逻辑时，请使用连贯段落。
@@ -68,7 +69,7 @@ This Skill simulates peer review of academic papers, producing a structured bili
    - Part 1 [The Review Report]：模拟真实的顶会审稿意见（使用中文）。包含以下板块：
      * Summary: 一句话总结文章核心。
      * Strengths: 简要列出 1-2 点真正有价值的贡献。
-     * Weaknesses (Critical): 必须列出 3-5 个可能导致直接拒稿的致命问题（如：缺乏核心 Baseline，原理存在逻辑漏洞，创新点被过度包装）。
+     * Weaknesses (Critical): 必须列出 3-5 个可能导致直接拒稿的致命问题（如：数据质量控制不足，物理机制解释缺失、结论过度推广、与已知文献不一致）。
      * Rating: 给出预估评分（1-10分，其中 Top 5% 为 8分以上）。
    - Part 2 [Strategic Advice]：针对作者的中文改稿建议。
      * 直击痛点：用中文解释 Part 1 中的 Critical Weaknesses 到底因何而起。
@@ -78,7 +79,7 @@ This Skill simulates peer review of academic papers, producing a structured bili
 # Execution Protocol
 在输出前，请自查：
 1. 你的语气是否太温和了？如果是，请重新审视那些模糊的实验结果，并提出尖锐的质疑。
-2. 你指出的问题是否具体？不要说"实验不够"，要说"缺少在 ImageNet 数据集上的鲁棒性验证"。
+2. 你指出的问题是否具体？不要说"数据不够"，要说"缺少对 Argo 浮标 salty drift 的校正说明，且未与船载 CTD 数据进行交叉验证"。
 ````
 
 ## Trigger
@@ -90,7 +91,7 @@ This Skill simulates peer review of academic papers, producing a structured bili
 **Example invocations:**
 - "Review this paper" / "审稿这篇论文"
 - "Give me a peer review of my draft" / "模拟评审我的论文"
-- "Simulate a reviewer for my CEUS submission"
+- "Simulate a reviewer for my JPO submission"
 - "帮我做一个模拟审稿"
 
 ## Modes
@@ -120,12 +121,12 @@ This Skill simulates peer review of academic papers, producing a structured bili
 | `references/expression-patterns/methods-and-data.md` | Assessing methods or data sections |
 | `references/expression-patterns/results-and-discussion.md` | Assessing results or discussion sections |
 | `references/expression-patterns/conclusions-and-claims.md` | Assessing conclusion sections |
-| `references/expression-patterns/geography-domain.md` | Paper involves spatial, urban, or planning topics |
+| `references/expression-patterns/ocean-science-domain.md` | Paper involves ocean, marine, or climate science topics |
 
 ### Journal Template (conditional)
 
 - When user specifies a target journal, load `references/journals/[journal].md`.
-- If template missing, **refuse**: "Journal template for [X] not found. Available: CEUS."
+- If template missing, **refuse**: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - Journal preferences inform review comments where relevant, but core dimensions and weights remain unchanged across all journals.
 
 ### Loading Rules
@@ -161,7 +162,7 @@ This Skill simulates peer review of academic papers, producing a structured bili
 ### Step 1: Collect Context
 
 - Load `references/expression-patterns.md` overview.
-- If target journal specified, load `references/journals/[journal].md`. If template missing, **refuse** with message: "Journal template for [X] not found. Available: CEUS."
+- If target journal specified, load `references/journals/[journal].md`. If template missing, **refuse** with message: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - Read user input: file via Read tool, or pasted text from conversation.
 - **Guard -- full paper required:** If input is partial (only introduction, only methods, etc.), refuse with message: "This Skill requires the full paper for review. Please provide the complete manuscript."
 - **Guard -- minimum length:** If input is under ~300 words, warn: "Text appears too short for a full paper review. Provide the complete manuscript."
@@ -175,7 +176,7 @@ This Skill simulates peer review of academic papers, producing a structured bili
 - If journal template loaded, cross-reference journal-specific expectations and note where the paper falls short of journal fit.
 - Assess across all five dimensions:
   1. **Novelty** -- Is the contribution genuinely new? Incremental or transformative?
-  2. **Methodology** -- Is the experimental design sound? Baselines adequate? Ablation studies present?
+  2. **Methodology** -- Is the experimental design sound? Are observational data quality-controlled? Are sensitivity experiments or control runs included where needed?
   3. **Writing Quality** -- Expression clarity, academic register, AI-sounding patterns, terminology consistency
   4. **Presentation** -- Figure/table quality, section organization, flow between sections
   5. **Significance** -- Does the work matter? Practical or theoretical impact?
@@ -240,7 +241,7 @@ Write the review report in the following locked structure:
 
 **Chinese translation rules:**
 - Use inline blockquote format (`> **[Chinese]** ...`) immediately after each concern's English text.
-- Preserve domain terminology precisely in Chinese (e.g., "ablation study" as "消融实验", not a generic paraphrase).
+- Preserve domain terminology precisely in Chinese (e.g., "sensitivity experiment" as "敏感性实验", "mixed layer depth" as "混合层深度", not generic paraphrases).
 - Each Chinese blockquote covers all three parts (problem, why, suggestion) in a single block.
 - The Verdict section also receives an inline Chinese translation.
 
@@ -264,8 +265,8 @@ Write the review report in the following locked structure:
 |-----------|----------|
 | Input is partial (only one section) | Refuse: "This Skill requires the full paper for review." |
 | Input too short (< 300 words) | Warn: "Text appears too short for a full paper review." |
-| Input language is Chinese | Warn and suggest Translation Skill first; proceed if user confirms |
-| Journal template missing when journal specified | Refuse: "Journal template for [X] not found. Available: CEUS." |
+| Input language is Chinese | Ask user to confirm target output language (English or Chinese) before proceeding |
+| Journal template missing when journal specified | Refuse: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC." |
 | No significant weaknesses found | Produce report with high scores; note strengths rather than fabricating concerns |
 | Paper clearly outside journal scope | Flag as a Major Concern about journal fit |
 

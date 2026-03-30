@@ -23,7 +23,7 @@ output_contract:
 
 ## Purpose
 
-This Skill syncs local `.claude/skills/` and `references/` from the upstream GitHub repository [Lylll9436/Paper-Polish-Workflow-skill](https://github.com/Lylll9436/Paper-Polish-Workflow-skill). It downloads the latest SKILL.md files and reference documents, compares them with local versions, and updates any changed files.
+This Skill syncs local `.claude/skills/` and `references/` from the upstream GitHub repository [441837297/Paper-Polish-Workflow-skill](https://github.com/441837297/Paper-Polish-Workflow-skill). It downloads the latest SKILL.md files and reference documents, compares them with local versions, and updates any changed files.
 
 ## Trigger
 
@@ -60,7 +60,7 @@ This Skill syncs local `.claude/skills/` and `references/` from the upstream Git
 ### Step 1: Pre-flight Check
 
 - Verify `gh` CLI is available and authenticated: `gh auth status`
-- Verify the upstream repo is accessible: `gh api repos/Lylll9436/Paper-Polish-Workflow-skill --jq '.full_name'`
+- Verify the upstream repo is accessible: `gh api repos/441837297/Paper-Polish-Workflow-skill --jq '.full_name'`
 - If either check fails, report the error and stop.
 - **Record workflow:** Append `{"skill": "ppw:update", "ts": "<ISO timestamp>"}` to `.planning/workflow-memory.json`. Create file as `[]` if missing. Drop oldest entry if log length >= 50.
 
@@ -68,11 +68,11 @@ This Skill syncs local `.claude/skills/` and `references/` from the upstream Git
 
 - List all skill directories from the remote repo:
   ```bash
-  gh api repos/Lylll9436/Paper-Polish-Workflow-skill/contents/.claude/skills --jq '.[].name'
+  gh api repos/441837297/Paper-Polish-Workflow-skill/contents/.claude/skills --jq '.[].name'
   ```
 - List all reference files from the remote repo:
   ```bash
-  gh api repos/Lylll9436/Paper-Polish-Workflow-skill/contents/references --jq '.[] | .name + " " + .type'
+  gh api repos/441837297/Paper-Polish-Workflow-skill/contents/references --jq '.[] | .name + " " + .type'
   ```
 - For reference subdirectories (type=dir), also list their contents recursively.
 
@@ -82,7 +82,7 @@ For each remote skill directory:
 
 1. Fetch the remote `SKILL.md` content:
    ```bash
-   gh api repos/Lylll9436/Paper-Polish-Workflow-skill/contents/.claude/skills/{skill-name}/SKILL.md --jq '.content' | base64 -d
+   gh api repos/441837297/Paper-Polish-Workflow-skill/contents/.claude/skills/{skill-name}/SKILL.md --jq '.content' | base64 -d
    ```
 2. Read the local `.claude/skills/{skill-name}/SKILL.md` if it exists.
 3. Compare the two:

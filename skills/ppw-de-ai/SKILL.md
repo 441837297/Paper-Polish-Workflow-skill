@@ -1,7 +1,7 @@
 ---
 name: ppw:de-ai
 description: >-
-  Detect and rewrite AI-generated patterns in English academic text.
+  Detect and rewrite AI-generated patterns in academic text (English or Chinese).
   Two-phase workflow: scan with risk tagging, then batch rewrite.
   Triggers on "de-AI", "降AI", "reduce AI traces", "AI检测".
 triggers:
@@ -43,7 +43,7 @@ output_contract:
 
 ## Purpose
 
-This Skill detects AI-generated patterns in English academic text and rewrites flagged passages with explainable, risk-tagged results. It scans text against three pattern dimensions (vocabulary inflation, sentence overclaims, transition smoothing) from the anti-AI patterns library, presents detections grouped by risk level (High Risk / Medium Risk / Optional), and lets users batch-select which items to rewrite. Rewrites restructure expressions rather than just swapping synonyms, preserving academic meaning and quality. For file input, edits are made in-place with LaTeX comment annotations for traceability; for pasted text, results appear in conversation.
+This Skill detects AI-generated patterns in academic text (English or Chinese) and rewrites flagged passages with explainable, risk-tagged results. It scans text against three pattern dimensions (vocabulary inflation, sentence overclaims, transition smoothing) from the anti-AI patterns library, presents detections grouped by risk level (High Risk / Medium Risk / Optional), and lets users batch-select which items to rewrite. Rewrites restructure expressions rather than just swapping synonyms, preserving academic meaning and quality. For file input, edits are made in-place with LaTeX comment annotations for traceability; for pasted text, results appear in conversation.
 
 ## Core Prompt
 
@@ -51,7 +51,7 @@ This Skill detects AI-generated patterns in English academic text and rewrites f
 
 ````markdown
 # Role
-你是一位计算机科学领域的资深学术编辑，专注于提升论文的自然度与可读性。你的任务是将大模型生成的机械化文本重写为符合顶级会议（如 ACL, NeurIPS）标准的自然学术表达。
+你是一位海洋科学领域的资深学术编辑，专注于提升论文的自然度与可读性。你的任务是将大模型生成的机械化文本重写为符合顶级期刊（如 JPO, JGR, GRL, Nature Communications）标准的自然学术表达。
 
 # Task
 请对我提供的【英文 LaTeX 代码片段】进行"去 AI 化"重写，使其语言风格接近人类母语研究者。
@@ -108,7 +108,7 @@ Underscore, Unveil, Vibrant
 
 **Activates when the user asks to:**
 - Detect, scan, or check for AI-generated patterns in academic text
-- Rewrite or reduce AI traces in English writing
+- Rewrite or reduce AI traces in academic writing (English or Chinese)
 - 降AI、检测AI痕迹、降低AI检测分数
 
 **Example invocations:**
@@ -157,14 +157,15 @@ Underscore, Unveil, Vibrant
 
 - Load ALL three anti-AI pattern leaves proactively at the start for full-text scanning.
 - Load expression patterns overview at the start; load section-specific leaves during rewrite phase based on detected section type.
-- When a target journal is specified, also load `references/journals/[journal].md`. If template missing, **refuse** with message: "Journal template for [X] not found. Available: CEUS."
+- When a target journal is specified, also load `references/journals/[journal].md`. If template missing, **refuse** with message: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - If an anti-AI pattern leaf is missing, warn the user and proceed with reduced detection coverage.
 
 ## Ask Strategy
 
 **Before starting, ask about:**
-1. Target journal (if not specified) -- determines style consideration during rewrite
-2. Scope: full paper or specific section (if ambiguous)
+1. Target output language (if not specified) -- ask: "目标输出语言是英文还是中文？" before reading any files.
+2. Target journal (if not specified) -- determines style consideration during rewrite
+3. Scope: full paper or specific section (if ambiguous)
 
 **Rules:**
 - In `direct` mode, skip pre-questions when the user provides enough context.
@@ -195,7 +196,7 @@ Underscore, Unveil, Vibrant
 **Step 2 -- Scan:**
 - **Follow the Core Prompt constraints above** as the primary instruction set for detection and rewrite.
 - Scan full text against all three pattern dimensions in a single pass.
-- For each match, check domain term protection: if the flagged term is standard domain terminology used in context (e.g., "landscape" in a geography paper, "robust" in a statistics paper), mark as SKIPPED with reason.
+- For each match, check domain term protection: if the flagged term is standard domain terminology used in context (e.g., "thermocline" in an oceanography paper, "robust" in a statistics paper), mark as SKIPPED with reason.
 - For Optional-tier matches: only flag if the pattern appears 3+ times in the text. Single occurrences are suppressed to reduce noise.
 
 **Step 3 -- Present Detection Report:**
@@ -279,8 +280,8 @@ Underscore, Unveil, Vibrant
 | Input too short (< 3 sentences) | Warn detection may be unreliable on short text; proceed if user confirms |
 | All detections are domain terms (all skipped) | Report "N patterns matched but all identified as domain terminology -- no rewrites needed" |
 | Existing `% [De-AI] Original:` annotations | Clean up old annotations before running new scan |
-| Input language is not English | Warn and suggest running Translation Skill first |
-| Journal template missing when journal specified | Refuse: "Journal template for [X] not found. Available: CEUS." |
+| Input language is not English | Ask user to confirm target output language before proceeding |
+| Journal template missing when journal specified | Refuse: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC." |
 | Very long input (10+ pages) | Process in sections; maintain cross-section awareness |
 
 ## Fallbacks

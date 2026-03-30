@@ -12,7 +12,7 @@ triggers:
     - "帮我写摘要"
     - "Optimize my existing abstract"
     - "改写我的摘要，符合五句话公式"
-    - "Generate a submission-ready abstract for CEUS"
+    - "Generate a submission-ready abstract for JPO"
     - "帮我生成一个投稿摘要"
     - "Restructure my abstract using the Farquhar formula"
     - "优化摘要让它更符合学术规范"
@@ -53,7 +53,7 @@ This Skill generates or optimizes academic paper abstracts using the locked 5-se
 - "Write an abstract for my paper" / "帮我写摘要"
 - "Optimize my existing abstract" / "改写我的摘要"
 - "Restructure this abstract using the 5-sentence formula"
-- "Generate a CEUS-ready abstract from my introduction and results"
+- "Generate a JPO-ready abstract from my introduction and results"
 
 ## Modes
 
@@ -89,7 +89,7 @@ This Skill generates or optimizes academic paper abstracts using the locked 5-se
 ### Journal Template (conditional)
 
 - When user specifies a target journal, load `references/journals/[journal].md`.
-- If template missing, **refuse**: "Journal template for [X] not found. Available: CEUS."
+- If template missing, **refuse**: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - If no journal specified, ask once; if declined, apply general academic style.
 
 ## Ask Strategy
@@ -124,7 +124,7 @@ This Skill generates or optimizes academic paper abstracts using the locked 5-se
 ### Step 1: Collect Context
 
 - Load `references/expression-patterns.md` overview.
-- If journal specified, load `references/journals/[journal].md`. If missing, refuse with: "Journal template for [X] not found. Available: CEUS."
+- If journal specified, load `references/journals/[journal].md`. If missing, refuse with: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - Read user input: file via Read tool, or pasted text from conversation.
 - Determine path: restructure if input reads like a formed abstract; generate if raw materials. Ask if ambiguous.
 - **Opt-out check:** Scan the user's trigger prompt for any of these phrases (case-insensitive, exact phrase match): `english only`, `no bilingual`, `only english`, `不要中文`. Store result as `bilingual_mode` (true/false). This flag governs Step 3 output below.
@@ -198,7 +198,7 @@ We propose... Despite growing interest in X, existing approaches fail to... We a
 | Input is ambiguous (not clearly raw content or existing abstract) | Ask before proceeding: "Do you have an existing abstract to restructure, or shall I generate one?" |
 | Existing abstract has fewer than 5 sentences | Run restructure path; flag missing positions with `[MISSING: ...]` |
 | User specifies word limit | Count words in output; warn if over limit with exact count |
-| Journal specified but template missing | Refuse: "Journal template for [X] not found. Available: CEUS." |
+| Journal specified but template missing | Refuse: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC." |
 | Formula position cannot be filled from available content | Flag with `[MISSING: difficulty statement]`; do not invent content |
 | User provides only a title or one-sentence summary | Ask for more content before proceeding |
 
@@ -215,23 +215,23 @@ We propose... Despite growing interest in X, existing approaches fail to... We a
 
 **Invocation:** "Help me restructure my abstract to follow the 5-sentence formula."
 
-User pastes: "In this paper we study urban mobility patterns using GPS data. We find that mobility is highly predictable. We propose a model called MobNet. It outperforms existing approaches by 12% on the next-location prediction task."
+User pastes: "In this paper we study mesoscale eddy patterns using satellite altimetry data. We find that eddy trajectories are highly predictable. We propose a model called EddyNet. It outperforms existing approaches by 12% on the eddy trajectory prediction task."
 
 **Output:**
 
 ```
-[1: Contribution] We propose MobNet, a model for predicting urban mobility using GPS data.
-[2: Difficulty] Despite the prevalence of GPS data, existing mobility models fail to capture [MISSING: difficulty statement — why prediction is hard or why existing approaches fall short].
-[3: Method] MobNet addresses this by [MISSING: method description — how MobNet works].
-[4: Evidence] Evaluated on a next-location prediction task using GPS traces from urban environments.
-[5: Key Result] MobNet outperforms existing approaches by 12% on next-location prediction.
+[1: Contribution] We propose EddyNet, a model for predicting mesoscale eddy trajectories using altimetry data.
+[2: Difficulty] Despite the prevalence of altimetry data, existing eddy tracking models fail to capture [MISSING: difficulty statement — why eddy trajectory prediction is hard or why existing approaches fall short].
+[3: Method] EddyNet addresses this by [MISSING: method description — how EddyNet works].
+[4: Evidence] Evaluated on a eddy trajectory prediction task using altimetry data from the South China Sea.
+[5: Key Result] EddyNet outperforms existing approaches by 12% on next-location prediction.
 
 ---
 Clean version:
-We propose MobNet, a model for predicting urban mobility using GPS data. [MISSING: difficulty statement]. MobNet addresses this by [MISSING: method description]. Evaluated on a next-location prediction task using GPS traces from urban environments. MobNet outperforms existing approaches by 12% on next-location prediction.
+We propose EddyNet, a model for predicting mesoscale eddy trajectories using altimetry data. [MISSING: difficulty statement]. EddyNet addresses this by [MISSING: method description]. Evaluated on a eddy trajectory prediction task using altimetry data from the South China Sea. EddyNet outperforms existing approaches by 12% on next-location prediction.
 ```
 
-Two formula positions are flagged as missing. Please provide: (1) why mobility prediction is hard or what existing approaches fail to do, and (2) a brief description of how MobNet works.
+Two formula positions are flagged as missing. Please provide: (1) why eddy trajectory prediction is hard or what existing approaches fail to do, and (2) a brief description of how EddyNet works.
 
 ---
 

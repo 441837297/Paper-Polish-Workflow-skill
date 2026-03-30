@@ -47,16 +47,16 @@ This Skill provides a systematic, top-down workflow for polishing academic paper
 | `references/expression-patterns/methods-and-data.md` | Polishing methods, data, or study area content |
 | `references/expression-patterns/results-and-discussion.md` | Polishing results or discussion content |
 | `references/expression-patterns/conclusions-and-claims.md` | Polishing conclusion content |
-| `references/expression-patterns/geography-domain.md` | Content involves spatial, urban, or planning topics |
+| `references/expression-patterns/ocean-science-domain.md` | Content involves ocean, marine, or climate science topics |
 | `references/anti-ai-patterns.md` | Polishing expression (Step 3) -- screen for AI-sounding phrases |
-| `references/journals/ceus.md` | Target journal is CEUS |
+| `references/journals/jpo.md` | Target journal is JPO |
 
 ### Loading Rules
 
 - Load expression patterns overview at start; select the appropriate leaf based on section type.
 - Load anti-AI patterns when polishing expression (Step 3).
 - Load journal template when target journal is specified.
-- Load `geography-domain.md` when spatial, urban, or planning content is detected.
+- Load `ocean-science-domain.md` when ocean, marine, or climate science content is detected.
 - If a reference file is missing, warn the user and proceed with reduced capability.
 
 ## Ask Strategy
@@ -77,10 +77,13 @@ This Skill provides a systematic, top-down workflow for polishing academic paper
 
 ### Step 1: Collect Context
 
-- Determine input type (file path or pasted text).
-- Load required references (expression-patterns overview).
+- **FIRST: Ask the user** which section to polish and confirm the target journal. Do NOT read any files before
+receiving this answer.
+- Determine input type (file path or pasted text) based on user's answer.
+- Load required references (relative `references/` path). Load
+expression-patterns overview; select the appropriate leaf based on section type.
 - Identify target journal; load journal template if specified.
-- Read input content using the Read tool; extract key numbers, claims, and data points.
+- Only after user confirms scope: read the specified content using the Read tool.
 - Locate example/reference papers if the user provides them (use Read tool for PDFs).
 - In `interactive` or `guided` mode: confirm scope with the user before proceeding.
 
@@ -116,7 +119,7 @@ AskUserQuestion({
 
 ### Step 4: Output
 
-- Generate highlights if the journal requires them (for CEUS, see `references/journals/ceus.md`).
+- Generate highlights if the journal requires them (check `references/journals/[journal].md` for journal-specific requirements).
 - Suggest a read-aloud final check to catch awkward phrasing.
 - Compile all confirmed content into the final version.
 - Present the final version with word count for user confirmation.

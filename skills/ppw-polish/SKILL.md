@@ -1,14 +1,14 @@
 ---
 name: ppw:polish
 description: >-
-  Polish English academic text through quick-fix or guided multi-pass workflow.
-  Adapts to journal style with in-place editing and change tracking. 英文学术论文润色。
+  Polish academic text (English or Chinese) through quick-fix or guided multi-pass workflow.
+  Adapts to journal style with in-place editing and change tracking. 学术论文润色。
 triggers:
-  primary_intent: polish English academic text for journal submission
+  primary_intent: polish academic text for journal submission
   examples:
     - "Polish this paragraph"
     - "润色这段英文"
-    - "Help me polish my introduction for CEUS"
+    - "Help me polish my introduction for JPO"
     - "Guided polish my methods section"
     - "引导模式润色这篇论文"
     - "Quick fix this draft"
@@ -27,7 +27,7 @@ references:
     - references/expression-patterns/methods-and-data.md
     - references/expression-patterns/results-and-discussion.md
     - references/expression-patterns/conclusions-and-claims.md
-    - references/expression-patterns/geography-domain.md
+    - references/expression-patterns/ocean-science-domain.md
     - references/anti-ai-patterns.md
     - references/anti-ai-patterns/vocabulary.md
     - references/anti-ai-patterns/sentence-patterns.md
@@ -44,7 +44,7 @@ output_contract:
 
 ## Purpose
 
-This Skill polishes English academic text for journal submission through two modes: Quick-fix (default, intelligent single-pass) and Guided (fixed three-step: structure, logic, expression). For file input, it edits the original file in-place using the Edit tool and preserves originals as LaTeX comment annotations for traceability. For pasted text, polished output is presented directly in conversation. The Skill adapts to journal-specific style when a target journal is specified, detects translationese automatically, and avoids high-frequency AI vocabulary by loading anti-AI patterns proactively.
+This Skill polishes academic text (English or Chinese) for journal submission through two modes: Quick-fix (default, intelligent single-pass) and Guided (fixed three-step: structure, logic, expression). For file input, it edits the original file in-place using the Edit tool and preserves originals as LaTeX comment annotations for traceability. For pasted text, polished output is presented directly in conversation. The Skill adapts to journal-specific style when a target journal is specified, detects translationese automatically, and avoids high-frequency AI vocabulary by loading anti-AI patterns proactively.
 
 ## Core Prompt
 
@@ -52,14 +52,14 @@ This Skill polishes English academic text for journal submission through two mod
 
 ````markdown
 # Role
-你是一位计算机科学领域的资深学术编辑，专注于提升顶级会议（如 NeurIPS, ICLR, ICML）投稿论文的语言质量。
+你是一位海洋科学领域的资深学术编辑，专注于提升顶级期刊（如 JPO, JGR, GRL, Nature Communications）投稿论文的语言质量。
 
 # Task
-请对我提供的【英文 LaTeX 代码片段】进行深度润色与重写。你的目标不仅仅是修正错误，而是要全面提升文本的学术严谨性、清晰度与整体可读性，使其达到零错误的最高出版水准。
+请对我提供的【学术文本片段】进行深度润色与重写。你的目标不仅仅是修正错误，而是要全面提升文本的学术严谨性、清晰度与整体可读性,使其其达到零错误的最高出版水准。你的目标不仅仅是修正错误，而是要全面提升文本的学术严谨性、清晰度与整体可读性，使其达到零错误的最高出版水准。
 
 # Constraints
 1. 学术规范与句式优化（核心任务）：
-   - 严谨性提升：调整句式结构以适配顶级会议的写作规范，增强文本的正式性与逻辑连贯性。
+   - 严谨性提升：调整句式结构以适配顶级期刊的写作规范，增强文本的正式性与逻辑连贯性。
    - 句法打磨：优化长难句的表达，使其更加流畅自然；消除由于非母语写作导致的生硬表达。
    - 零错误原则：彻底修正所有拼写、语法、标点及冠词使用错误。
 
@@ -70,16 +70,16 @@ This Skill polishes English academic text for journal submission through two mod
 
 3. 内容与格式保持：
    - 术语维持：不要展开常见的领域缩写（例如：保持 LLM 原样，不要展开为 Large Language Models）。
-   - 命令保留：严格保留原文中的 LaTeX 命令（如 `\cite{}`, `\ref{}`, `\eg`, `\ie` 等）。
-   - 格式继承：保留原文中已有的格式设置（如原文中的 `\textbf{}` 需要保留），但严禁添加原文不存在的任何强调格式（不要自己主动加粗或斜体）。
+   - 命令保留：严格保留原文中的排版命令（如 `\cite{}`, `\ref{}`, `\eg`, `\ie`，`$...$`、Markdown 链接 `[text](url)`、图片 `![...](...)` 语法等）。
+   - 格式继承：保留原文中已有的格式设置（LaTeX `\textbf{}` 或 Markdown `**bold**`），但严禁添加原文不存在的任何格式。
 
 4. 结构要求：
    - 严禁列表化：不要将段落改写为 item 列表，必须保持完整的段落结构。
 
 5. 输出格式：
-   - Part 1 [LaTeX]：只输出润色后的英文 LaTeX 代码。
-     * 必须对特殊字符进行转义（例如：`%`、`_`、`&`）。
-     * 保持数学公式原样（保留 `$` 符号）。
+   - Part 1 [Polished Text]: 只输出润色后的文本，保持与源格式一致（LaTeX 或 Markdown）。
+     * LaTeX: 必须对特殊字符进行转义（例如：`%` → `\%`, `_` → `\_`）。保持数学公式原样（保留 `$` 符号）。
+     * Markdown: 保持标准 Markdown 语法（链接、图片、代码块等）。
    - Part 2 [Translation]：对应的中文直译。
      * 严禁在中文名词后使用括号标注英文（拒绝双语冗余）。
    - Part 3 [Modification Log]：使用中文简要说明主要的润色点（例如：优化了句式结构，增强了学术语气，修正了语法错误）。
@@ -93,7 +93,7 @@ This Skill polishes English academic text for journal submission through two mod
 - 润色、改善、优化英文学术文本
 
 **Example invocations:**
-- "Polish this paragraph for CEUS" / "润色这段英文"
+- "Polish this paragraph for JPO" / "润色这段英文"
 - "Guided polish my methods section" / "引导模式润色方法部分"
 - "Quick fix my introduction" / "帮我快速润色引言"
 - "Polish all sections in my paper"
@@ -126,7 +126,7 @@ This Skill polishes English academic text for journal submission through two mod
 | `references/expression-patterns/methods-and-data.md` | Polishing methods, data, or study area content |
 | `references/expression-patterns/results-and-discussion.md` | Polishing results or discussion content |
 | `references/expression-patterns/conclusions-and-claims.md` | Polishing conclusion content |
-| `references/expression-patterns/geography-domain.md` | Content involves spatial, urban, or planning topics |
+| `references/expression-patterns/ocean-science-domain.md` | Content involves ocean, marine, or climate science topics |
 | `references/anti-ai-patterns/vocabulary.md` | Always -- loaded proactively for vocabulary screening |
 | `references/anti-ai-patterns/sentence-patterns.md` | Always -- loaded proactively for sentence pattern screening |
 | `references/anti-ai-patterns/transitions-and-tone.md` | Always -- loaded proactively for transition screening |
@@ -136,7 +136,7 @@ This Skill polishes English academic text for journal submission through two mod
 - Load expression patterns overview at the start; select the appropriate leaf based on section type.
 - Load ALL three anti-AI pattern leaves proactively (vocabulary, sentence-patterns, transitions-and-tone).
 - When a target journal is specified, also load `references/journals/[journal].md`.
-- Load `geography-domain.md` when spatial, urban, or planning content is detected.
+- Load `ocean-science-domain.md` when ocean, marine, or climate science content is detected.
 - If a reference file is missing, warn the user and proceed with reduced capability (except journal templates; see Fallbacks).
 
 ## Ask Strategy
@@ -168,6 +168,8 @@ This Skill polishes English academic text for journal submission through two mod
 
 **Step 1 -- Collect Context:**
 - Determine input type: file path (use Edit tool) or pasted text (output in conversation).
+- **Format detection:** Auto-detect input format by checking file extension (`.tex`/`.md`/`.txt`) and content markers (`\section{}`, `$$`, `$...$ LaTeX commands). Markdown files have `#`, `##`, `---` markers). For LaTeX, use LaTeX-mode processing; for Markdown, use Markdown-mode processing.
+- **Language detection:** Detect input language (Chinese, English, or mixed). Ask the user: "目标输出语言是英文还是中文？" before reading any files. Default to English output only if user explicitly confirms.
 - Load references: expression pattern leaf by section type, all anti-AI pattern leaves, journal template if specified.
 - Detect input characteristics: translationese presence, section type, text length for smart adaptation.
 - **Opt-out check:** Scan the user's trigger prompt for any of these phrases (case-insensitive, exact phrase match): `english only`, `no bilingual`, `only english`, `不要中文`. Store result as `bilingual_mode` (true/false). This flag governs Step 5 bilingual output below.
@@ -218,20 +220,28 @@ This Skill polishes English academic text for journal submission through two mod
 
 **Step 6 -- Bilingual Display:** Same as Quick-fix Step 5. If `bilingual_mode` is true, display `> **[Chinese]** ...` blockquotes in conversation for each modified paragraph. If false, skip entirely.
 
-## LaTeX Annotation Format
+## Annotation Format (by source format)
 
+**LaTeX files:**
 - Format: `% [Polish] Original: <original text>` on the line immediately before the replacement text.
 - Multi-line originals: each line gets its own `% [Polish] Original:` prefix.
 - Annotations are valid LaTeX comments -- the file still compiles with them present.
 - Cleanup: after user confirms acceptance, remove all lines matching `^% \[Polish\] Original:` pattern.
-- If existing `% [Polish] Original:` annotations are found, clean them up before adding new ones.
+
+**Markdown files:**
+- Format: `<!-- [Polish] Original: <original text> -->` on the line immediately before the replacement text.
+- Multi-line originals: use a single HTML comment block.
+- Cleanup: after user confirms acceptance, remove all lines matching `^<!-- \[Polish\] Original:`.
+
+**Common rules:**
+- If existing polish annotations are found, clean them up before adding new ones.
 
 ## Output Contract
 
 | Output | Format | Condition |
 |--------|--------|-----------|
 | `polished_text` | In-place edits (file) or conversation output (pasted text) | Always produced |
-| `change_annotations` | LaTeX comments (`% [Polish] Original:`) | File input only |
+| `change_annotations` | LaTeX comments orMarkdown HTML comments) | File input only |
 | `summary_report` | Markdown in session (not in file) | Always produced |
 | `bilingual_conversation` | `> **[Chinese]** ...` blockquotes in session | File input: modified paragraphs only. Pasted text: after each output paragraph. Skipped when opt-out detected. |
 

@@ -2,7 +2,7 @@
 name: ppw:caption
 description: >-
   Generate or optimize figure/table captions for academic papers.
-  Geography-aware: study area, CRS notation, data source.
+  Ocean-science-aware: study area, gridded data notation, data source.
   Writes output to .tex file. 图表标题生成与优化。
 triggers:
   primary_intent: generate or optimize figure/table caption
@@ -11,7 +11,7 @@ triggers:
     - "帮我写图表标题"
     - "Optimize this table caption"
     - "优化我的图表说明"
-    - "Generate a CEUS-ready figure caption"
+    - "Generate a JPO-ready figure caption"
     - "帮我生成符合期刊要求的图题"
 tools:
   - Read
@@ -21,7 +21,7 @@ references:
   required:
     - references/expression-patterns.md
   leaf_hints:
-    - references/expression-patterns/geography-domain.md
+    - references/expression-patterns/ocean-science-domain.md
 input_modes:
   - file
   - pasted_text
@@ -31,7 +31,7 @@ output_contract:
 
 ## Purpose
 
-This Skill generates or optimizes LaTeX figure and table captions for academic papers. For spatial figures (maps, GIS outputs, aerial photos), the Skill proactively collects study area, data source, and CRS metadata using a geography-aware Ask Strategy. For non-spatial figures and tables, geography questions are skipped entirely. Output is written directly to the user's `.tex` file at the correct `\caption{}` location using the Read-before-Write pattern. When a target journal is specified, caption length and style are adapted to the journal template.
+This Skill generates or optimizes LaTeX figure and table captions for academic papers. For ocean/marine figures (maps, bathymetric charts, section plots), the Skill proactively collects study area, data source, and resolution metadata using an ocean-science-aware Ask Strategy. For non-spatial figures and tables, spatial-specific questions are skipped entirely. Output is written directly to the user's `.tex` file at the correct `\caption{}` location using the Read-before-Write pattern. When a target journal is specified, caption length and style are adapted to the journal template.
 
 ## Core Prompt
 
@@ -44,7 +44,7 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 你是一位经验丰富的学术编辑，擅长撰写精准、规范的论文插图标题。
 
 # Task
-请将我提供的【中文描述】转化为符合顶级会议规范的【英文图标题】。
+请将我提供的【描述内容】转化为符合顶级会议规范的【图标题】，目标语言以用户指定为准。
 
 # Constraints
 1. 格式规范：
@@ -56,7 +56,7 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
    - 去 AI 味：尽量避免使用复杂的生僻词，保持用词平实准确。
 
 3. 输出格式：
-   - 只输出翻译后的英文标题文本。
+   - 只输出目标语言的标题文本。
    - 不要包含 Figure 1: 这样的前缀，只输出内容本身。
    - 必须对特殊字符进行转义（例如：`%`、`_`、`&`）。
    - 保持数学公式原样（保留 `$` 符号）。
@@ -69,7 +69,7 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 你是一位经验丰富的学术编辑，擅长撰写精准、规范的论文表格标题。
 
 # Task
-请将我提供的【中文描述】转化为符合顶级会议规范的【英文表标题】。
+请将我提供的【描述内容】转化为符合顶级会议规范的【表标题】，目标语言以用户指定为准。
 
 # Constraints
 1. 格式规范：
@@ -77,11 +77,11 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
    - 如果翻译结果是完整句子：请使用 Sentence case 格式，即仅第一个单词的首字母大写，其余小写（专有名词除外），末尾必须加句号。
 
 2. 写作风格：
-   - 常用句式：对于表格，推荐使用 Comparison with, Ablation study on, Results on 等标准学术表达。
+   - 常用句式：对于表格，推荐使用 Comparison of, Statistics of, Summary of, Results from 等标准学术表达。
    - 去 AI 味：尽量避免使用 showcase, depict 等词，直接使用 show, compare, present。
 
 3. 输出格式：
-   - 只输出翻译后的英文标题文本。
+   - 只输出目标语言的标题文本。
    - 不要包含 Table 1: 这样的前缀，只输出内容本身。
    - 必须对特殊字符进行转义（例如：`%`、`_`、`&`）。
    - 保持数学公式原样（保留 `$` 符号）。
@@ -97,9 +97,9 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 **Example invocations:**
 - "Write a caption for my figure" / "帮我写图表标题"
 - "Optimize this table caption" / "优化我的图表说明"
-- "Generate a CEUS-ready figure caption" / "帮我生成符合期刊要求的图题"
+- "Generate a JPO-ready figure caption" / "帮我生成符合期刊要求的图题"
 - "Improve the caption for my map figure"
-- "帮我生成符合CEUS要求的图题"
+- "帮我生成符合JPO要求的图题"
 
 ## Modes
 
@@ -127,35 +127,37 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 
 | File | When to Load |
 |------|--------------|
-| `references/expression-patterns/geography-domain.md` | When figure type is spatial (map, photo, GIS output); provides study area framing, spatial description patterns, planning language |
+| `references/expression-patterns/ocean-science-domain.md` | When figure type involves ocean/marine data; provides study area framing, oceanographic description patterns, climate variable terminology |
 
 ### Journal Template (conditional)
 
 - When user specifies a target journal, load `references/journals/[journal].md`.
-- If template missing, **refuse**: "Journal template for [X] not found. Available: CEUS."
+- If template missing, **refuse**: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - If no journal specified, ask once; if declined, use general academic style.
 
 ## Ask Strategy
 
 **Before starting, collect:**
 
-1. **Figure or table type** (always required — determines whether spatial questions apply):
+1. **Target language** (ask: "目标输出语言是英文还是中文？")
+
+2. **Figure or table type** (always required — determines whether spatial questions apply):
    map / chart / diagram / photo / data table?
 
 2. **Target journal** if not specified (ask once; if declined, use general academic style)
 
-3. **If figure type is spatial (map, photo, GIS output):**
-   - Study area / city name (e.g., "Beijing Chaoyang District")
-   - Data source brief (e.g., "OpenStreetMap 2023", "Landsat-8 imagery")
-   - CRS (ask only if user knows it; skip if uncertain — do not press)
-   - Key legend items (ask only if map or chart has a visible legend)
+3. **If figure type involves ocean/marine data (map, section plot, bathymetric chart):**
+   - Study area / ocean region name (e.g., "Kuroshio Extension")
+   - Data source brief (e.g., "MODIS-Aqua Level 3 (2023)", "Argo floats, 2015-2023")
+   - Resolution/gridding (ask only if user knows it; skip if uncertain — do not press)
+   - Key legend items or variable ranges (ask only if map or chart has a visible legend)
 
 4. **If figure type is non-spatial (bar chart, line chart, schematic, data table):**
-   Skip all geography questions. Ask only for data source if not mentioned.
+   Skip all spatial-specific questions. Ask only for data source if not mentioned.
 
 **Rules:**
 - Never ask more than 3 questions before proceeding
-- Missing spatial metadata (CRS, legend): skip the clause gracefully — do NOT insert `[MISSING: ...]` stubs in caption output
+- Missing spatial metadata (resolution, legend): skip the clause gracefully — do NOT insert `[MISSING: ...]` stubs in caption output
 - If `.tex` file has multiple `\caption{}` commands: ask which `\label{}` (e.g., `\label{fig:study_area}`) is the target before writing
 - In `direct` mode with sufficient context already provided, proceed without pre-questions
 
@@ -174,7 +176,7 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 ### Step 1: Collect Context
 
 - Load `references/expression-patterns.md` overview.
-- If journal specified, load `references/journals/[journal].md`. If missing, refuse: "Journal template for [X] not found. Available: CEUS."
+- If journal specified, load `references/journals/[journal].md`. If missing, refuse: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC."
 - Read user input: if file provided, use Read tool; otherwise accept pasted text description.
 - Run Ask Strategy questions to fill any gaps not already answered by input.
 - Determine path: if user provides an existing caption to improve → Optimize path; if user provides content description only → Generate path; ask if ambiguous.
@@ -184,12 +186,12 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 
 - **Follow the Core Prompt constraints above** (figure or table prompt as applicable) as the primary instruction set for caption generation.
 
-- If figure type is spatial: load `references/expression-patterns/geography-domain.md`.
+- If figure type involves ocean/marine data: load `references/expression-patterns/ocean-science-domain.md`.
 - Apply figure vs. table branching logic:
 
 | Type | Caption Focus |
 |------|--------------|
-| Map | Spatial extent, CRS (if provided), data source, scale bar mention |
+| Map | Spatial extent, gridded resolution (if provided), data source, depth/pressure range mention |
 | Chart / Diagram | Variables described, trend or comparison purpose, data source |
 | Photo | Subject, location (if provided), data source or photographer credit |
 | Table | Row/column semantics, statistical context, units, data source |
@@ -200,7 +202,7 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 
 ### Step 2b: Optimize Path (improve existing weak caption)
 
-- If figure type is spatial: load `references/expression-patterns/geography-domain.md`.
+- If figure type involves ocean/marine data: load `references/expression-patterns/ocean-science-domain.md`.
 - Review existing caption for: completeness (subject/content/source), spatial metadata gaps, terminology precision, journal length compliance.
 - Rewrite using the same branching logic and three-part format as the Generate path.
 - Do not introduce `[MISSING: ...]` placeholders; generate from available content.
@@ -222,58 +224,58 @@ This Skill generates or optimizes LaTeX figure and table captions for academic p
 
 **LaTeX caption format examples:**
 
-Figure (spatial):
+Figure (ocean/spatial):
 ```latex
-\caption{Distribution of urban green space in Shenzhen Nanshan District. Data derived from OpenStreetMap 2023. Projected in WGS 84 / UTM Zone 50N.}
+\caption{Distribution of sea surface temperature in the South China Sea. Data derived from MODIS-Aqua Level 3 (2023). Gridded at 0.25° × 0.25° resolution.}
 ```
 
 Figure (non-spatial):
 ```latex
-\caption{Comparison of model accuracy across three benchmark datasets. All values are F1 scores. Data from the COCO 2017 validation set.}
+\caption{Comparison of modeled vs. observed temperature profiles at three mooring stations. All values are root-mean-square errors. In situ data from the Argo float array.}
 ```
 
 Table:
 ```latex
-\caption{Descriptive statistics of land use change by category, 2010--2020. All areas reported in km\textsuperscript{2}. Data from the Third National Land Survey.}
+\caption{Seasonal statistics of mixed layer depth by region, 2015--2023. All areas reported in km\textsuperscript{2}. Data from the Argo float array and ship-based CTD casts.}
 ```
 
 ## Edge Cases
 
 | Situation | Handling |
 |-----------|----------|
-| Journal specified but template not found | Refuse: "Journal template for [X] not found. Available: CEUS." |
-| Figure type is spatial but no study area or data source provided | Generate from available content; skip missing clauses; do NOT use `[MISSING: ...]` |
+| Journal specified but template not found | Refuse: "Journal template for [X] not found. Available: JPO, JGR, GRL, NC, NCC." |
+| Figure type involves spatial data but no study area or data source provided | Generate from available content; skip missing clauses; do NOT use `[MISSING: ...]` |
 | `.tex` file has multiple `\caption{}` commands | Ask which `\label{}` is the target before writing |
 | User provides both existing caption and content description | Default to Optimize path; confirm if ambiguous |
 | Figure type unclear ("my figure") | Ask type before any branching logic |
 | Input is only a file path with no description | Read the file; ask for clarification if content is ambiguous |
 | Non-standard caption format in journal template | Journal template overrides default three-part format rules |
-| User declines to provide CRS | Skip CRS clause entirely; do not leave placeholder |
+| User declines to provide resolution | Skip resolution clause entirely; do not leave placeholder |
 
 ## Fallbacks
 
 | Scenario | Fallback |
 |----------|----------|
 | Structured Interaction unavailable | Ask 1-3 plain-text questions (figure type, journal, study area if spatial) |
-| `geography-domain.md` leaf missing | Proceed with general spatial description; warn user of reduced quality |
+| `ocean-science-domain.md` leaf missing | Proceed with general oceanographic description; warn user of reduced quality |
 | Journal template missing (no journal specified) | Ask once; if declined, use general academic style |
 | Write tool fails | Present caption in conversation; advise user to paste at `\caption{}` location |
 | `.tex` file not found or unreadable | Present caption in conversation |
 
 ## Examples
 
-**Invocation:** "Write a caption for my map figure showing urban heat island distribution in Guangzhou."
+**Invocation:** "Write a caption for my map figure showing mesoscale eddy distribution in the South China Sea."
 
 **Ask Strategy exchange:**
-- Type: map (spatial → geography questions apply)
-- Study area: Guangzhou
-- Data source: Landsat-8 imagery, 2022
+- Type: map (spatial → ocean science questions apply)
+- Study area: South China Sea
+- Data source: Argo floats, 2015-2023
 - CRS: user does not know → skipped
-- Journal: CEUS
+- Journal: JPO
 
-**Generated caption (after loading CEUS template and geography-domain.md):**
+**Generated caption (after loading JPO template and ocean-science-domain.md):**
 ```latex
-\caption{Spatial distribution of urban heat island intensity in Guangzhou. Land surface temperature derived from Landsat-8 imagery (2022). City boundary data from the National Geomatics Center of China.}
+\caption{Spatial distribution of sea surface temperature anomaly in the Kuroshio Extension region. Sea surface temperature from ERA5 reanalysis (2022). Bathymetry from GEBCO 2023.}
 ```
 
 **Write step:** Skill reads `paper.tex`, locates `\caption{}` at `\label{fig:uhi}`, replaces content, writes file.

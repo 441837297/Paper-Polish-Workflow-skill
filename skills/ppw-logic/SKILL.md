@@ -254,30 +254,30 @@ None.
 
 **Minimal invocation (file input):**
 
-User: "Check the logic of my draft: /papers/urban_model.pdf"
+User: "Check the logic of my draft: /papers/eddy_analysis.pdf"
 
 *Ask Strategy (direct mode — file path provided, proceeding without pre-questions)*
 
 *Step 2 analysis runs: AC-1 found (Introduction→Methods chain break), TI-1 found (terminology variant)*
 *Step 3 derives Status column from AC-1*
 
-**Truncated output (`urban_model_logic.md`):**
+**Truncated output (`eddy_analysis_logic.md`):**
 
 ```markdown
 # Logic Verification Report
 
-**Paper:** urban_model.pdf
+**Paper:** eddy_analysis.pdf
 **Date:** 2026-03-12
 
 ## Part 1 — Argument Chain View
 
 | Section | Primary Claim | Connects To | Status |
 |---------|--------------|-------------|--------|
-| Introduction | Urban sprawl prediction framework proposed | Methods | Gap |
-| Methods | Gradient boosting model trained on parcel data | Results | Connected |
-| Results | 82% accuracy on hold-out set | Discussion | Connected |
-| Discussion | Model generalizes to mid-size cities | Conclusion | Connected |
-| Conclusion | Framework advances urban planning practice | — | Terminal |
+| Introduction | Mesoscale eddy detection and tracking framework proposed | Methods | Gap |
+| Methods | Eddy detection model trained on satellite altimetry data | Results | Connected |
+| Results | 85% detection rate on validation set | Discussion | Connected |
+| Discussion | Model generalizes to other ocean basins | Conclusion | Connected |
+| Conclusion | Framework advances ocean observation practice | — | Terminal |
 
 ## Part 2 — Categorized Issue List
 
@@ -285,10 +285,10 @@ User: "Check the logic of my draft: /papers/urban_model.pdf"
 
 **Issue AC-1: Introduction Framework Not Reflected in Methods Design**
 **Section:** [Introduction], [Methods]
-**Problem:** The Introduction proposes a "multi-scale prediction framework," but Methods describes a single-scale gradient boosting model with no multi-scale architecture.
+**Problem:** The Introduction proposes a "multi-scale eddy detection framework," but Methods describes a single-scale eddy detection model with no multi-scale architecture.
 **Why this matters:** Reviewers will note the mismatch between the stated contribution and the actual implementation, undermining the novelty claim.
 **Suggestion:** Either update the Introduction to describe a single-scale model, or add a multi-scale component to Methods with justification.
-> **[Chinese]** 问题：引言提出"多尺度预测框架"，但方法章节仅描述单尺度梯度提升模型，无多尺度架构。为什么重要：审稿人会注意到声明贡献与实际实现之间的不一致，削弱新颖性声明。建议：修改引言以描述单尺度模型，或在方法中补充多尺度组件并加以说明。
+> **[Chinese]** 问题：引言提出"多尺度涡检测框架"，但方法章节仅描述单尺度涡检测模型，无多尺度架构。为什么重要：审稿人会注意到声明贡献与实际实现之间的不一致，削弱新颖性声明。建议：修改引言以描述单尺度模型，或在方法中补充多尺度组件并加以说明。
 
 ### Unsupported Claims
 
@@ -296,12 +296,12 @@ No issues identified in this category.
 
 ### Terminology Inconsistencies
 
-**Issue TI-1: "Urban Sprawl Prediction Framework" vs. "Urban Growth Model"**
-**Section:** [Introduction, 第2段], [Methods, 第1段]
-**Problem:** The Introduction uses "urban sprawl prediction framework" while Methods refers to the same system as "urban growth model" without an explicit rename or definition.
+**Issue TI-1: "Mesoscale Eddy Detection Framework" vs. "Eddy Tracking Model"**
+**Section:** [Introduction, paragraph 2], [Methods, paragraph 1]
+**Problem:** The Introduction uses "mesoscale eddy detection framework" while Methods refers to the same system as "eddy tracking model" without an explicit rename or definition.
 **Why this matters:** Readers and reviewers may interpret these as different systems, reducing clarity.
 **Suggestion:** Choose one term and use it consistently throughout, or introduce the alternative as a defined synonym on first use.
-> **[Chinese]** 问题：引言使用"城市蔓延预测框架"，方法章节将同一系统称为"城市增长模型"，未作明确说明。为什么重要：读者和审稿人可能将其理解为不同系统，降低论文清晰度。建议：统一使用一个术语，或在首次出现时将替代名称定义为同义词。
+> **[Chinese]** 问题：引言使用"中尺度涡检测框架"，方法章节将同一系统称为"涡旋追踪模型"，未作明确说明。为什么重要：读者和审稿人可能将其理解为不同系统，降低论文清晰度。建议：统一使用一个术语，或在首次出现时将替代名称定义为同义词。
 
 ### Number Contradictions
 
