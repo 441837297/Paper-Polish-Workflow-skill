@@ -1,27 +1,39 @@
-# OS
-.DS_Store
-Thumbs.db
+# Ignore everything by default
+*
+*/
 
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
+# --- PPW Skills (whitelist) ---
+!skills/
+!skills/ppw-polish/
+!skills/ppw-polish/SKILL.md
+!skills/ppw-abstract/
+!skills/ppw-abstract/SKILL.md
+!skills/ppw-caption/
+!skills/ppw-caption/SKILL.md
+!skills/ppw-cover-letter/
+!skills/ppw-cover-letter/SKILL.md
+!skills/ppw-de-ai/
+!skills/ppw-de-ai/SKILL.md
+!skills/ppw-logic/
+!skills/ppw-logic/SKILL.md
+!skills/ppw-reviewer-simulation/
+!skills/ppw-reviewer-simulation/SKILL.md
+!skills/ppw-update/
+!skills/ppw-update/SKILL.md
+!skills/paper-polish-workflow/
+!skills/paper-polish-workflow/SKILL.md
 
-# Node
-node_modules/
-*.tgz
+# --- References (whitelist) ---
+!references/
+!references/*.md
+!references/journals/
+!references/journals/*.md
+!references/expression-patterns/
+!references/expression-patterns/*.md
+!references/anti-ai-patterns/
+!references/anti-ai-patterns/*.md
 
-# GSD / Planning (internal development state)
-.planning/
-.sisyphus/
-
-# Claude Code local (dev use only, not part of plugin)
-.claude/
-paper-polish-workflow/
-examples/
-.npmrc
-
-# Stackdumps
-*.stackdump
-package.json
+# --- Root docs ---
+!README.md
+!CHANGELOG.md
+!LICENSE
